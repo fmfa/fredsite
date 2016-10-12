@@ -9,6 +9,41 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+// nodemailer setup
+var nodemailer = require('nodemailer'); 
+var smtpConfig ={
+	service: "Gmail",
+	host: 'smtp.gmail.com', 
+	port: 465, 
+	secure: true, 
+	auth: {
+		user: '****', 
+		pass: '****' 
+	}, 
+	tls:{
+		secureProtocol: "TLSv1_method"
+	}
+};
+
+var transporter = nodemailer.createTransport(smtpConfig);
+
+app.post('/registrationEmail', function(req, res){
+	var mailOptions = {
+		    from: 'FMFA@fmfa.org', 
+		    to: '*******' , // list of receivers 
+		    subject: 'setup for website password', // Subject line 
+		    text: 'link that '
+		  
+		};
+	console.log('this is the mail options', mailOptions); 
+
+	transporter.sendMail(mailOptions, function(error, info){
+	    if(error){
+	        return console.log('this is the ', error);
+	    }
+	    console.log('Message sent: ' + info.response);
+	});
+}); 
 
 
 
