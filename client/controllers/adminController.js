@@ -42,5 +42,16 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
  		});
  	};
 
+ 	$scope.createClass = function(){
+ 		console.log('creating class', $scope.class.emails);
+ 		$scope.class.emails = $scope.class.emails.split(/(?:,|)+/);
+ 		console.log($scope.class.emails);
+ 		usersFactory.createClass($scope.class, function(data){
+			console.log('THIS is the new class:',data);
+			
+		});
+
+ 	}
+
 
 });

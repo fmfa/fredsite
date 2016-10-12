@@ -80,5 +80,19 @@ myApp.factory('usersFactory', function ($http, $cookies){
         });
     };
 
+    factory.createClass = function (classInfo, callback){
+      $http.post('/createClass', classInfo)
+      .then(function(data){
+        callback(data);
+      });
+    };
+
+    factory.updatePassword = function (pswdInfo, callback){
+      $http.post('/updatePassword', pswdInfo)
+      .then(function(data){
+        callback(data);
+      });
+    };
+
     return factory;
 });

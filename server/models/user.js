@@ -58,7 +58,10 @@ var UserSchema = new mongoose.Schema({
     _comment_id: [{
       type: Schema.Types.ObjectId,
       ref: 'Comment'
-    }]
+    }],
+    _class: {
+      type: Schema.Types.ObjectId, 
+      ref: 'classes'},
   },
     {timestamps: true}
 );

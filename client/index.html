@@ -191,7 +191,6 @@
                     </div>
                     <div class="modal-body">
 
-                        <!-- <div w3-include-html="firstProject.html"></div> -->
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label for="title" class="col-sm-2 control-label">First Name:</label>
@@ -242,9 +241,54 @@
                                     <button type="button" class="btn btn-primary pull-right" ng-click='editProfile(user._id, user.first_name, user.last_name, user.email, user.phone)' data-dismiss="modal">Save Changes</button>
                                 </div>
                             </div>
+                        </form><br><br>
+
+                        <!-- CHANGE PASSWORD FORM -->
+                        <form class="form-horizontal" name="registerForm">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label">Old Password:</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="postTitle" ng-model="pswd.old">
+                                </div>
+
+
+                            </div>
+                            <div class="form-group" ng-class="{'has-error':registerForm.password.$invalid && !registerForm.password.$pristine}">
+                                    <label for="" class="col-sm-2 control-label">Password:</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" name="password" ng-model="pswd.new" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required>
+
+                                        <span ng-show='registerForm.password.$touched && registerForm.password.$error.required' style="color:red">Password cannot be empty!</span>
+                                        <p ng-show="registerForm.password.$error.minlength" class="error" style="color:red">
+                                            Password must be between 8 and 20 characters.</p>
+                                        <p ng-show="registerForm.password.$error.pattern" class="error" style="color:red">
+                                            Must contain:<br>
+                                            &bull;1 LOWER &amp; UPPERCASE letter <br>
+                                            &bull;1 NON-ALPHA character (a number or a symbol.)
+                                          </p>
+                                    </div>
+
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': registerForm.confirmPassword.$invalid && !registerForm.confirmPassword.$pristine}">
+                                    <label for="" class="col-sm-2 control-label">Confirm Password:</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="pswd.conf" valid-password-c="pswd.new" required>
+                                        <span ng-show='registerForm.confirmPassword.$touched && registerForm.confirmPassword.$error.required' style="color:red">Please confirm your password!</span>
+                                        <p ng-show="registerForm.confirmPassword.$error.noMatch" class="error" style="color:red">Please make sure your passwords match.</p>
+                                        <p ng-show="result == 'error'" class="error" style="color:red">Old Password is not correct. Please try again</p>
+                                        <p ng-show="result == 'ok'" style="color:green;">Successfully updated password</p>
+                                    </div>
+                                </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="button" class="btn btn-primary pull-right" ng-click='changePassword()'>Change Password</button>
+                                </div>
+                            </div>
                         </form>
 
-                        <!-- <p>Hi </p><link type="html" href='./firstProject.html'> -->
+
                     </div>
                 </div>
             </div>

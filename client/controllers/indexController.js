@@ -185,6 +185,24 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 			console.log('after edit user -- $rootScope.user: ', $rootScope.user);
 		});
 	}
+
+	$scope.changePassword = function(){
+		// console.log(userCookie)
+		$scope.pswd.userId = userCookie.user._id;
+		// console.log($scope.pswd);
+		usersFactory.updatePassword($scope.pswd, function(data){
+			console.log('back in the controller', data);
+			if(data.data.status == 'Incorrect old password'){
+				$scope.result = 'error';
+			}
+			else if(data.data.status == 'ok!'){
+				$scope.result = 'ok'
+			}
+
+		});
+	};
+
+
 //use the above code if any conflict occurred
 //#######################################################
 

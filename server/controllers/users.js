@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('users');
+var Class = mongoose.model('classes');
 var passport = require('passport');
 //var bCrypt = require('bcrypt-nodejs');
 var bcrypt = require('bcryptjs');
@@ -70,6 +71,31 @@ module.exports = (function (){
                     });
                 }
             });
+    },
+    updatePassword: function (req, res){
+      console.log('req.body: ',req.body);
+      User.findOne({_id:req.body.userId}, function(err, user) {
+          if (err) {
+              console.log(err);
+          } else {
+
+              if(isvalidPassword(req.body.old, user.password) ){
+                  user.password = secretPassword(req.body.new);
+                  user.save(function (err, result){
+                    if (err) {
+                      console.log('error updating password', err)
+                    }
+                    else{
+                      console.log('success updating password', result)
+                      res.json({status: 'ok!'})
+                    }
+                  });
+              }
+              else{
+                res.json({status: 'Incorrect old password'});
+              }
+          }
+      });
     },
     // userInformation: function (req, res){
     //   console.log("*@*@* Back-end controller -- users.js -- userInformation ***");
@@ -210,10 +236,22 @@ module.exports = (function (){
           }
         }
       });
-    }
+    },
+    createClass: function (req, res){
+      console.log(req.body, 'REQ BODY')
+      // var clas = new Class(req.body);
+      // clas.save(function (err, result){
+      //   if(err){
+      //     console.log('*@*@* error creating class ', err);
+      //   }
+      //   else {
+      //       console.log('this is our new class',result);
+      //       res.json(result);
+      //   }
+      // });
+    },
 
 
-    
 
   };
 })();
