@@ -30,6 +30,8 @@
 	        	Class Name:<input type="text" ng-model='class.name'></input><br>
 	        	<!-- Class Members:<input type="text" ng-model='class.emails'></input>
 	        	<h6>Enter emails comma separated</h6> -->
+	        	Class Description: <textarea ng-model="class.description" cols="50" rows="5"></textarea><br>
+	        	
 	        </form>
 	      </div>
 	      <div class="modal-footer">
@@ -45,6 +47,7 @@
 <div  ng-repeat="c in getClasses">
 	<!-- {{c}} -->
 	<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+	<h5>{{c.description}}</h5>
 	<h4>Users: {{c.users}}</h4>
 	<ul>
 		<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>

@@ -8,6 +8,7 @@ var ClassSchema = new mongoose.Schema({
       ref: 'users'
     }],
     name: String,
+    description: String,
 
 },{timestamps: true});
 module.exports = mongoose.model('classes', ClassSchema);
