@@ -170,7 +170,7 @@ module.exports = (function (){
     },
     getUsers: function(req, res){
       console.log('GOT TO GET USERS CONTROLLER');
-      User.find({}, function(err, users){
+      User.find({}).populate('_class').exec(function(err, users){
         if(err){
           console.log(err);
         }else{

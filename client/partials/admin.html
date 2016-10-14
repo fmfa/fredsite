@@ -126,13 +126,13 @@
 <div ng-if="manageUsers">
 	<div class="container">
 	<div ng-repeat='u in users'>
+	<!-- {{u}} -->
 		<h5>{{u.first_name}} {{u.last_name}}</h5>
 		<div>
 			<h6>{{u.email}}</h6>
-			<h6>Class: </h6>
+			<h6>Class: {{u._class.name}}</h6>
 			<h6 ng-if='u.phone'>{{u.phone}}</h6>
 		</div>
-		<button>Add User to Class</button>
 		<button class="btn deleteBtn btn-danger pull-right">Block User</button>
 		<button class="btn deleteBtn btn-danger pull-right" ng-click = 'deleteUser(u._id)'>Delete User</button><br><hr>
 	</div>
