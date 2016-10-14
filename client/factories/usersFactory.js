@@ -81,6 +81,7 @@ myApp.factory('usersFactory', function ($http, $cookies){
     };
 
     factory.createClass = function (classInfo, callback){
+      console.log('at createClass', classInfo);
       $http.post('/createClass', classInfo)
       .then(function(data){
         callback(data);

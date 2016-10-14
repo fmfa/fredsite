@@ -239,16 +239,16 @@ module.exports = (function (){
     },
     createClass: function (req, res){
       console.log(req.body, 'REQ BODY')
-      // var clas = new Class(req.body);
-      // clas.save(function (err, result){
-      //   if(err){
-      //     console.log('*@*@* error creating class ', err);
-      //   }
-      //   else {
-      //       console.log('this is our new class',result);
-      //       res.json(result);
-      //   }
-      // });
+      var newClass = new Class(req.body);
+      newClass.save(function (err, result){
+        if(err){
+          console.log('*@*@* error creating class ', err);
+        }
+        else {
+            console.log('this is our new class',result);
+            res.json(result);
+        }
+      });
     },
 
 

@@ -1,5 +1,6 @@
 var postsController = require('../controllers/posts.js')
 var usersController = require('../controllers/users.js')
+var adminController = require('../controllers/admin.js')
 
  module.exports = function(app){
 
@@ -105,9 +106,18 @@ var usersController = require('../controllers/users.js')
     // console.log('req.body', req.body);
     usersController.admin_login(req, res);
   });
+
+  app.post('/searchForUser', function (req, res){
+    adminController.searchForUser(req, res);
+  });
+
   app.get('/flagged_posts', function(req, res){
  		postsController.getFlaggedPosts(req, res);
  	});
+
+  app.get('/getClasses', function(req, res){
+    adminController.getClasses(req, res);
+  });
 
   app.post('/createClass', function (req, res){
     console.log('Back-end routes -- app.post /createClass ');
@@ -117,6 +127,10 @@ var usersController = require('../controllers/users.js')
 
   app.post('/updatePassword', function(req, res){
     usersController.updatePassword(req, res);
+  })
+
+  app.post('/addUser', function(req, res){
+    adminController.addUserToClass(req, res);
   })
 
 

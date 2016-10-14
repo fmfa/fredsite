@@ -51,6 +51,12 @@ var UserSchema = new mongoose.Schema({
       // required : true
 
     },
+
+    blocked: {
+      type: Boolean,
+      default: false
+    },
+
     _post_id: [{
       type: Schema.Types.ObjectId,
       ref: 'posts'

@@ -1,9 +1,19 @@
+<div class="container"
 <div ng-controller='adminController'>
 
 <div>
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
 	  CREATE NEW CLASS
 	</button>
+<!-- {{getClasses}} -->
+	<button class="btn btn-primary btn-lg" ng-Click="manageClasses()">Manage Open Classes</button>
+
+	<button class="btn btn-primary btn-lg" ng-Click="seeManageUsers()">Manage Users</button>
+
+	<button class="btn btn-primary btn-lg" ng-Click="showFlaggedPosts()">See Flagged Posts</button>
+
+	<button class="btn btn-primary btn-lg">Manage Closed</button>
+
 
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -18,8 +28,8 @@
 	      <div class="modal-body">
 	        <form>
 	        	Class Name:<input type="text" ng-model='class.name'></input><br>
-	        	Class Members:<input type="text" ng-model='class.emails'></input>
-	        	<h6>Enter emails comma separated</h6>
+	        	<!-- Class Members:<input type="text" ng-model='class.emails'></input>
+	        	<h6>Enter emails comma separated</h6> -->
 	        </form>
 	      </div>
 	      <div class="modal-footer">
@@ -31,7 +41,38 @@
 	</div>
 </div>
 
+<div ng-if="showClasses">
+<div  ng-repeat="c in getClasses">
+	<!-- {{c}} -->
+	<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+	<h4>Users: {{c.users}}</h4>
+	<ul>
+		<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
+	</ul>
+	<button>Close Class</button>
+	<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+</div>
+</div>
 
+<div ng-if="showAddUserToClass">
+	<h4>Add user to class: {{classNameToAddUser}}</h4>
+	<p>Search</p>
+	<p>First Name: <input type="text" ng-model="findUser.firstName"></p>
+	<p>Last Name: <input type="text" ng-model="findUser.lastName"></p>
+	<p><input type="submit" value="Search for User" ng-click="searchForUser(findUser)"></p>
+
+	<div ng-if="foundUsers">
+		<div ng-repeat="f in foundUsers">
+		foundUser: {{f._id}} 
+		class_id: {{classIdToAddUser}}
+			<p>{{f.first_name}} {{f.last_name}}</p>
+			<p>{{f.email}} {{f.createdAt}}</p>
+			<button ng-click="addThisUserToClass(f._id, classIdToAddUser)">Add To Class</button>
+		</div>
+	</div>
+</div>
+
+<div ng-if="seeFlaggedPosts">
 	<h3>FLAGGED POST</h3>
 	<div ng-if='flaggedPosts' ng-repeat='x in flaggedPosts| orderBy: createdAt : true' style="padding-left: 0;">
 		<div class="container">
@@ -79,12 +120,33 @@
 			</div>
 		</div>
 	</div>
+
+</div><!--end seeFlaggedPosts -->
+
+<div ng-if="manageUsers">
+	<div class="container">
 	<div ng-repeat='u in users'>
 		<h5>{{u.first_name}} {{u.last_name}}</h5>
 		<div>
 			<h6>{{u.email}}</h6>
+			<h6>Class: </h6>
 			<h6 ng-if='u.phone'>{{u.phone}}</h6>
 		</div>
+		<button>Add User to Class</button>
+		<button class="btn deleteBtn btn-danger pull-right">Block User</button>
 		<button class="btn deleteBtn btn-danger pull-right" ng-click = 'deleteUser(u._id)'>Delete User</button><br><hr>
 	</div>
 </div>
+</div>
+</div> <!-- end manage users -->
+
+
+<!-- <div ng-if="manageUsers"> -->
+	<!-- <div class="container"> -->
+	
+</div>
+
+<!-- </div> -->
+<!-- </div> < -->
+</div>
+
