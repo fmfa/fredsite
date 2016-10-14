@@ -20,7 +20,7 @@ module.exports = (function() {
 			Class.find({}).populate('_users').exec(function(err, classes){
 				if(err){
 					console.log(err);
-					console.log('getmongooses function mongooses controller');
+					// console.log('getmongooses function mongooses controller');
 				} else {
 					res.json(classes);
 				}
@@ -32,7 +32,7 @@ module.exports = (function() {
 			User.find({first_name: req.body.firstName, last_name: req.body.lastName}, function(err, users){
 				if(err){
 					console.log(err);
-					console.log('getmongooses function mongooses controller');
+					// console.log('getmongooses function mongooses controller');
 				} else {
 					console.log("Here are the users: ", users);
 					res.json(users);
@@ -45,22 +45,42 @@ module.exports = (function() {
 			User.findOne({_id: req.body.user_id}, function(err, user){
 				if(err){
 					console.log(err);
-					console.log('getmongooses function mongooses controller');
+					// console.log('getmongooses function mongooses controller');
 				} else {
 					user._class= req.body.class_id;
 					user.save();
-					console.log("Here are the users: ", user);
+					// console.log("Here are the users: ", user);
 				}
 			})
 			Class.findOne({_id: req.body.class_id}, function(err, foundClass){
 				if(err){
 					console.log(err);
-					console.log('getmongooses function mongooses controller');
+					// console.log('getmongooses function mongooses controller');
 				} else {
 					foundClass._users.push(req.body.user_id);
 					foundClass.save();
 					// console.log("Here are the users: ", user);
 					res.json(foundClass);
+				}
+			})
+		},
+
+		blockUser: function(req, res){
+			console.log("req.body on blockUser: ", req.body);
+			User.findOne({_id: req.body.user_id}, function(err, user){
+				if(err){
+					console.log(err);
+					// console.log('getmongooses function mongooses controller');
+				} else {
+					user.blocked = !user.blocked;
+					// if(user.blocked == true){
+					// 	user.blocked = false;
+					// }
+					// if(user.blocked == true){
+					// 	user.blocked = false;
+					// }
+					user.save();
+					res.json(user);
 				}
 			})
 		},

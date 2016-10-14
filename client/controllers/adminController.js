@@ -116,5 +116,33 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
  		})
  	}
 
+ 	$scope.blockUser=function(user_id){
+ 		console.log("blockUser on admin Controller");
+ 		var info = {
+ 			user_id: user_id
+ 		};
+ 		adminFactory.blockUser(info, function(data){
+ 			console.log("user Blocked: ", data);
+ 			usersFactory.getUsers(function(data){
+			console.log('THIS IS ALL THE USERS:',data);
+			$scope.users = data.data;
+			});
+ 		})
+ 	}
+
+ 	// $scope.unblockUser=function(user_id){
+ 	// 	console.log("unblockUser on admin Controller");
+ 	// 	var info = {
+ 	// 		user_id: user_id
+ 	// 	};
+ 	// 	adminFactory.blockUser(info, function(data){
+ 	// 		console.log("user Blocked: ", data);
+ 	// 		usersFactory.getUsers(function(data){
+		// 	console.log('THIS IS ALL THE USERS:',data);
+		// 	$scope.users = data.data;
+		// 	});
+ 	// 	})
+ 	// }
+
 
 });

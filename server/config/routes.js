@@ -127,11 +127,16 @@ var adminController = require('../controllers/admin.js')
 
   app.post('/updatePassword', function(req, res){
     usersController.updatePassword(req, res);
-  })
+  });
 
   app.post('/addUser', function(req, res){
     adminController.addUserToClass(req, res);
-  })
+  });
+
+  app.post('/blockUser', function(req, res){
+    console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
+    adminController.blockUser(req, res);
+  });
 
 
 }

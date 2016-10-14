@@ -18,9 +18,9 @@ var isvalidPassword = function(userPassword, databasePassword){
 module.exports = (function (){
   return {
     createUser: function (req, res){
-      console.log("*@*@* Back-end controller -- users.js -- createUser ***");
-      console.log('*@*@* req.body', req.body);
-      console.log("password : secretPassword(req.body.password)",  secretPassword(req.body.password));
+      // console.log("*@*@* Back-end controller -- users.js -- createUser ***");
+      // console.log('*@*@* req.body', req.body);
+      // console.log("password : secretPassword(req.body.password)",  secretPassword(req.body.password));
 
       User.findOne({email: req.body.email}, function (err, foundUser){
         if(foundUser){
@@ -53,8 +53,8 @@ module.exports = (function (){
 
     },
     updateUser: function (req, res){
-      console.log("*@*@* Back-end controller -- users.js -- userInformation ***");
-      console.log('req.body: ',req.body);
+      // console.log("*@*@* Back-end controller -- users.js -- userInformation ***");
+      // console.log('req.body: ',req.body);
       // replace session.userId with cookieId
       User.findOne({_id:req.body.user_id}, function(err, user) {
                 if (err) {
@@ -73,7 +73,7 @@ module.exports = (function (){
             });
     },
     updatePassword: function (req, res){
-      console.log('req.body: ',req.body);
+      // console.log('req.body: ',req.body);
       User.findOne({_id:req.body.userId}, function(err, user) {
           if (err) {
               console.log(err);
@@ -109,7 +109,7 @@ module.exports = (function (){
     //         });
     // },
     login: function (req, res){
-      console.log("*@*@* Back-end controller -- users.js -- logIn ***");
+      // console.log("*@*@* Back-end controller -- users.js -- logIn ***");
       User.findOne({email: req.body.email}, function (err, user){
         var verifyPassword = req.body.password;
         if(!user){
@@ -138,14 +138,14 @@ module.exports = (function (){
       });
     },
     logout: function (req, res){
-      console.log("*@*@* Back-end controller -- users.js -- logout ***");
+      // console.log("*@*@* Back-end controller -- users.js -- logout ***");
       // console.log('*@*@* destroy the following session data \n', req.session);
       // req.session.destroy();
       // console.log('session data destroied -- session data: ', req.session);
       res.redirect('/');
     },
     searchName: function (req,res) {
-      console.log("*@*@* Back-end controller -- users.js -- searchName ***");
+      // console.log("*@*@* Back-end controller -- users.js -- searchName ***");
         // original query
 
       // User.find({'first_name': {'$regex': req.body.name}}, function(err, users) {
@@ -169,7 +169,7 @@ module.exports = (function (){
             }); 
     },
     getUsers: function(req, res){
-      console.log('GOT TO GET USERS CONTROLLER');
+      // console.log('GOT TO GET USERS CONTROLLER');
       User.find({}).populate('_class').exec(function(err, users){
         if(err){
           console.log(err);
@@ -190,8 +190,8 @@ module.exports = (function (){
     },
 
     uploadUrl: function(req, res){
-      console.log(req.params.id); 
-      console.log(req.body)
+      // console.log(req.params.id); 
+      // console.log(req.body)
       User.findByIdAndUpdate({_id: req.params.id}, { profile_pic: req.body.image}, {new: true}, function(err, updatedUser){
         if(err){
           console.log('error', err);
@@ -203,7 +203,7 @@ module.exports = (function (){
       })
     },  
     admin_login: function (req, res){
-      console.log("*@*@* Back-end controller -- users.js -- logIn ***");
+      // console.log("*@*@* Back-end controller -- users.js -- logIn ***");
       User.findOne({email: req.body.email}, function (err, user){
         var verifyPassword = req.body.password;
         if(!user){
@@ -238,7 +238,7 @@ module.exports = (function (){
       });
     },
     createClass: function (req, res){
-      console.log(req.body, 'REQ BODY')
+      // console.log(req.body, 'REQ BODY')
       var newClass = new Class(req.body);
       newClass.save(function (err, result){
         if(err){

@@ -20,5 +20,12 @@ myApp.factory('adminFactory', function ($http, $cookies){
     });
   }
 
+  factory.blockUser = function(user_id, callback){
+    console.log("blockUser on adminFactory", user_id);
+    $http.post('/blockUser', user_id).then(function(data){
+      callback(data.data);
+    });
+  }
+
     return factory;
 });

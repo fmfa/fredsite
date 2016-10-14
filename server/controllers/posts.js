@@ -8,13 +8,13 @@ module.exports = (function() {
 	return {
 
 		makePost: function(req, res){
-			console.log(req.body, 'THIS IS REQ BODY');
+			// console.log(req.body, 'THIS IS REQ BODY');
 
 			post = new Post(req.body);
 			post.save(function(err, result){
 				if(err){
 					console.log(err);
-					console.log('error creating a new post');
+					// console.log('error creating a new post');
 				} else {
 					console.log('this is our new post',result);
 					User.findOne({_id : req.body._user_id}, function(err, user){
@@ -22,9 +22,9 @@ module.exports = (function() {
 							console.log('there was an error', err); 
 						}
 						else{
-							console.log('found the user', user); 
+							// console.log('found the user', user); 
 							user._post_id.push(result._id); 
-							console.log('this is the newly updated user', user)
+							// console.log('this is the newly updated user', user)
 							user.save(function(err){
 								if(err){
 									console.log('there was an error', err);
@@ -44,14 +44,14 @@ module.exports = (function() {
 				if(err){
 					console.log(err);
 				} else {
-					console.log(posts);
+					// console.log(posts);
 					res.json(posts);
 				}
 			})
 		},
 
 		searchPosts: function(req, res){
- 			console.log(req.body.text);
+ 			// console.log(req.body.text);
  			Post.find({$or: [
  					 {"text": new RegExp(req.body.text, "i")},
  					 {"title": new RegExp(req.body.text, "i")}
@@ -59,7 +59,7 @@ module.exports = (function() {
 				if(err){
 					console.log(err);
 				} else {
-					console.log(posts);
+					// console.log(posts);
 					res.json(posts);
 				}
 			}); 
@@ -78,8 +78,8 @@ module.exports = (function() {
 
  		},
 	    editPost: function (req, res){
-	      console.log("*@*@* Back-end controller -- posts.js -- editPost ***");
-	      console.log('edit post req.body: ', req.body._id);
+	      // console.log("*@*@* Back-end controller -- posts.js -- editPost ***");
+	      // console.log('edit post req.body: ', req.body._id);
 	      // replace session.userId with cookieId
 	      Post.findOne({_id:req.body._id}, function(err, post) {
 	                if (err) {
@@ -108,7 +108,7 @@ module.exports = (function() {
 		flagPost: function(req, res){
  			Post.findOne({_id: req.params.id}, function(err, post){
 				post.flagged = true
-				console.log('THIS IS THE post to flag',post);
+				// console.log('THIS IS THE post to flag',post);
 					post.save(function (err) {
 							if(err) {
 									console.error('ERROR flagging post!');
@@ -118,7 +118,7 @@ module.exports = (function() {
 									if(err){
 										console.log(err);
 									} else {
-										console.log(posts);
+										// console.log(posts);
 										res.json(posts);
 									}
 								})
@@ -129,7 +129,7 @@ module.exports = (function() {
 		unflagPost: function(req, res){
  			Post.findOne({_id: req.params.id}, function(err, post){
 				post.flagged = false
-				console.log('THIS IS THE post to unflag',post);
+				// console.log('THIS IS THE post to unflag',post);
 					post.save(function (err) {
 							if(err) {
 									console.error('ERROR unflagging post!');
@@ -145,23 +145,23 @@ module.exports = (function() {
 				if(err){
 					console.log(err);
 				} else {
-					console.log(posts);
+					// console.log(posts);
 					res.json(posts);
 				}
 			})
 		},
  		commentPost : function(req,res){
- 			console.log(req.body, 'THIS IS REQ BODY commentPost');
+ 			// console.log(req.body, 'THIS IS REQ BODY commentPost');
 			comment = new Comment(req.body);
 			comment.save(function(err, result){
 				if(err){
 					console.log(err);
-					console.log('error creating a new comment');
+					// console.log('error creating a new comment');
 				} else {
-					console.log("commentPost - getResult = ", result, "\n ######################################" );
+					// console.log("commentPost - getResult = ", result, "\n ######################################" );
 					Post.findOne({_id: req.body._post}, function (err, post){
 						post.comments.push(result._id);
-						console.log('THIS IS THE comment to post',post);
+						// console.log('THIS IS THE comment to post',post);
 					    post.save(function (err) {
 					        if(err) {
 					            console.error('ERROR ADDING comment to post!');
@@ -182,7 +182,7 @@ module.exports = (function() {
 				} else {
 					var commentId = comment._id;
 					var postId = comment._post;
-					console.log('THIS IS COME', postId);
+					// console.log('THIS IS COME', postId);
 					comment.remove();
 					Post.findOne({_id: postId}, function (erro, post){
 						if(err){
