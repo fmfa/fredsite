@@ -42,10 +42,13 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  	});
 
  	// GET POSTS OF PEOPLE IN MY CLASS
- 	postsFactory.getPostsByArray(userCookie.user._class._users, function(data){
- 		console.log('PEOPLE IN MY CLASS POSTS:' ,data);
- 		$scope.myClassPosts = data;
- 	});
+ 	if(userCookie.user._class){
+ 		postsFactory.getPostsByArray(userCookie.user._class._users, function(data){
+	 		console.log('PEOPLE IN MY CLASS POSTS:' ,data);
+	 		$scope.myClassPosts = data;
+	 	});
+ 	}
+ 	
 
  	// GET POSTS OF PEOPLE I FOLLOW
  	postsFactory.getPostsByArray(userCookie.user._following, function(data){
