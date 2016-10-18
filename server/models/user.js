@@ -47,9 +47,7 @@ var UserSchema = new mongoose.Schema({
 
     user_level : {
       type : Number,
-      sparse:true
-      // required : true
-
+      default: 1,
     },
 
     blocked: {

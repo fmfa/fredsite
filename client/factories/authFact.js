@@ -21,13 +21,14 @@ myApp.factory('authFact', function ($http, $cookies){
     };
 
 
-    authFact.setUserCookie= function(_id, first_name, last_name, email, phone){
+    authFact.setUserCookie= function(_id, first_name, last_name, email, phone, user_level){
       var userCookie = {
         user:{  _id: _id,
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
-                phone: phone
+                phone: phone,
+                user_level: user_level,
               }
           };
       $cookies.putObject('userCookie', userCookie);
