@@ -7,7 +7,7 @@ myApp.controller('loginController', function($scope, $location, $window, $timeou
       usersFactory.createUser($scope.new_user, function(data){
         if(data.data.isLoggedIn){
           // console.log(" *!*!*! usersFactory.createUser -- data.data: ", data.data);
-            authFact.setUserCookie(data.data.userCookie._id, data.data.userCookie.first_name, data.data.userCookie.last_name, data.data.userCookie.email, data.data.userCookie.user_level);
+            authFact.setUserCookie(data.data.userCookie._id, data.data.userCookie.first_name, data.data.userCookie.last_name, data.data.userCookie.email, data.data.userCookie.user_level, data.data.userCookie._class, data.data.userCookie._following);
 
             authFact.setAccessToken(data.data.authentication);
             $location.url('/');
@@ -29,7 +29,7 @@ myApp.controller('loginController', function($scope, $location, $window, $timeou
         else if(data.data.status === 200){
             // console.log('authFact.setUserCookie');
             console.log(" *!*!*! usersFactory.login -- data.data: ", data.data);
-            authFact.setUserCookie(data.data.userCookie._id, data.data.userCookie.first_name, data.data.userCookie.last_name, data.data.userCookie.email, data.data.userCookie.phone, data.data.userCookie.user_level);
+            authFact.setUserCookie(data.data.userCookie._id, data.data.userCookie.first_name, data.data.userCookie.last_name, data.data.userCookie.email, data.data.userCookie.phone, data.data.userCookie.user_level, data.data.userCookie._class, data.data.userCookie._following);
             authFact.setAccessToken(data.data.authentication);
             $location.url('/');
         }

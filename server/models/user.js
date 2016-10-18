@@ -65,7 +65,12 @@ var UserSchema = new mongoose.Schema({
     }],
     _class: {
       type: Schema.Types.ObjectId, 
-      ref: 'classes'},
+      ref: 'classes'
+    },
+    _following: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
   },
     {timestamps: true}
 );
