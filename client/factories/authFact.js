@@ -42,5 +42,12 @@ myApp.factory('authFact', function ($http, $cookies){
       return $cookies.getObject('userCookie');
     };
 
+    authFact.setFollow= function(_following){
+      var userCookie = authFact.getUserCookie();
+      userCookie.user._following = _following;
+      $cookies.putObject('userCookie', userCookie);
+      console.log("EDDITING COOKIE WITH following", userCookie);
+    };
+
     return authFact;
 });

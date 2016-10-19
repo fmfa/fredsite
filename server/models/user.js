@@ -69,7 +69,8 @@ var UserSchema = new mongoose.Schema({
     },
     _following: [{
       type: Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      index: {unique: true}
     }],
   },
     {timestamps: true}

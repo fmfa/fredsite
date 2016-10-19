@@ -18,6 +18,22 @@ myApp.factory('usersFactory', function ($http, $cookies){
         });
       };
 
+      factory.followUser = function(userInfo, callback){
+        console.log('at factory follow user');
+        $http.post('/followUser', userInfo)
+        .then(function(data){
+          callback(data);
+        });
+      }
+
+      factory.unfollowUser = function(userInfo, callback){
+        console.log('at factory unfollow user');
+        $http.post('/unfollowUser', userInfo)
+        .then(function(data){
+          callback(data);
+        });
+      }
+
       factory.updateUser = function (userInfo, callback){
         console.log("*** front-end usersFactory.js -- factory.createUser ***");
         console.log(userInfo);

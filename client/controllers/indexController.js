@@ -10,10 +10,43 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 	    console.log('scope.choice', $scope.choice)
 	}
 
+	$scope.follow = function(userId){
+		var userInfo = {
+			follower: userCookie.user._id,
+			following: userId
+		}
+		usersFactory.followUser(userInfo, function(data){
+			console.log('back in controller', data);
+			postsFactory.getPostsByArray(data.data._following, function(dat){
+		 		console.log('PEOPLE I FOLLOW POSTS:' ,dat);
+		 		$scope.followingPosts = dat;
+				authFact.setFollow($scope.followingPosts);
+		 	});
+			// console.log('FOLLOWIN POSTs:', $scope.followingPosts)
+		})
+	}
+
+	$scope.unfollow = function(userId){
+		var userInfo = {
+			follower: userCookie.user._id,
+			following: userId
+		}
+		usersFactory.unfollowUser(userInfo, function(data){
+			console.log('back in controller', data.data);
+			postsFactory.getPostsByArray(data.data._following, function(dat){
+		 		console.log('PEOPLE I FOLLOW POSTS:' ,dat);
+		 		$scope.followingPosts = dat;
+		 		authFact.setFollow($scope.followingPosts);
+		 	});
+			// console.log('FOLLOWIN POSTs:', $scope.followingPosts)
+			
+		})
+	}
+
 	var userCookie = authFact.getUserCookie();
 
 	console.log('globla var userCookie: ', userCookie);
-	// console.log("rootScope: ", $rootScope);
+	console.log("rootScope: ", $rootScope);
 
 	$scope.isLogged = function (){
 		return authFact.getAccessToken();
@@ -41,20 +74,21 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  		$scope.posts = data;
  	});
 
- 	// GET POSTS OF PEOPLE IN MY CLASS
- 	if(userCookie.user._class){
+ 	
+ 	if(userCookie && userCookie.user){
+ 		// GET POSTS OF PEOPLE IN MY CLASS
  		postsFactory.getPostsByArray(userCookie.user._class._users, function(data){
 	 		console.log('PEOPLE IN MY CLASS POSTS:' ,data);
 	 		$scope.myClassPosts = data;
 	 	});
+	 	// GET POSTS OF PEOPLE I FOLLOW
+	 	postsFactory.getPostsByArray(userCookie.user._following, function(data){
+	 		console.log('PEOPLE I FOLLOW POSTS:' ,data);
+	 		$scope.followingPosts = data;
+	 	});
  	}
- 	
 
- 	// GET POSTS OF PEOPLE I FOLLOW
- 	postsFactory.getPostsByArray(userCookie.user._following, function(data){
- 		console.log('PEOPLE I FOLLOW POSTS:' ,data);
- 		$scope.followingPosts = data;
- 	});
+ 	
 
 
 	$scope.feed = true;

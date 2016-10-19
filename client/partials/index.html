@@ -34,7 +34,8 @@
 
                 <div class="col-sm-2" style="margin-top:15px; padding: 0;">
                     <img class="profile-pic" src={{x._user_id.profile_pic}}><br>
-                    <strong >{{ x._user_id.first_name }} {{x._user_id.last_name}}</strong>
+                    <strong >{{ x._user_id.first_name }} {{x._user_id.last_name}}</strong><br>
+                    <button ng-if='x._user_id._id != user._id' ng-click='follow(x._user_id)'>Follow {{x._user_id.first_name}}</button>
                 </div>
 
                 <div class="col-sm-10" style="padding: 0;">
@@ -148,7 +149,8 @@
             
                 <div class="col-sm-2" style="margin-top:15px; padding: 0;">
                     <img class="profile-pic" src={{x._user_id.profile_pic}}><br>
-                    <strong >{{ x._user_id.first_name }} {{x._user_id.last_name}}</strong>
+                    <strong >{{ x._user_id.first_name }} {{x._user_id.last_name}}</strong><br>
+                    <button ng-click='unfollow(x._user_id._id)'>Stop Following</button>
                 </div>
 
                 <div class="col-sm-10" style="padding: 0;">

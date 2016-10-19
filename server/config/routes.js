@@ -90,11 +90,7 @@ var adminController = require('../controllers/admin.js')
     // console.log('got to the destroy user route');
     usersController.destroyUser(req, res);
   })
-  // app.post('/silliconValleyFacesWall', function (req, res){
-    // console.log('Back-end routes -- app.get /silliconValleyFacesWall ');
-    // console.log('welcome to silliconValleyFacesWall');
-  // });
-
+  
   app.post('/imgUrl/:id', function(req, res){
     // console.log('made it to the upload image route')
     usersController.uploadUrl(req, res);
@@ -131,12 +127,20 @@ var adminController = require('../controllers/admin.js')
     usersController.updatePassword(req, res);
   });
 
+  app.post('/followUser', function(req, res){
+    usersController.followUser(req, res);
+  });
+
+  app.post('/unfollowUser', function(req, res){
+    usersController.unfollowUser(req, res);
+  });
+
   app.post('/addUser', function(req, res){
     adminController.addUserToClass(req, res);
   });
 
   app.post('/blockUser', function(req, res){
-    console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
+    // console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
     adminController.blockUser(req, res);
   });
 

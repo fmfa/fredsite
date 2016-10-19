@@ -71,6 +71,51 @@ module.exports = (function (){
                 }
             });
     },
+    followUser: function (req, res){
+      console.log('req.body: ',req.body);
+      User.findOne({_id:req.body.follower}, function(err, user) {
+                if (err) {
+                    console.log('ERROR FINDING USER',err);
+                } 
+                else {
+                    user._following.push(req.body.following) 
+                    user.save(function(erro){
+                      if(erro){
+                        console.log('ERROR FOLLOWING', erro)
+                        res.json({error: erro});
+                      }
+                      else{
+                        console.log('success following', user)
+                        res.json(user);
+                      }
+                    });
+                }
+            });
+    },
+    unfollowUser: function (req, res){
+      console.log('req.body: ',req.body);
+      User.findOne({_id:req.body.follower}, function(err, user) {
+                if (err) {
+                    console.log('ERROR FINDING USER',err);
+                } 
+                else {
+                    console.log('BEFORE SPLICE:', user)
+                    var index = user._following.indexOf(req.body.following);
+                    user._following.splice(index, 1); 
+                    console.log('AFTER SPLICE:', user)
+                    user.save(function(erro){
+                      if(erro){
+                        console.log('ERROR FOLLOWING', erro)
+                        res.json({error: erro});
+                      }
+                      else{
+                        console.log('success UNfollowing', user)
+                        res.json(user);
+                      }
+                    });
+                }
+            });
+    },
     updatePassword: function (req, res){
       // console.log('req.body: ',req.body);
       User.findOne({_id:req.body.userId}, function(err, user) {
