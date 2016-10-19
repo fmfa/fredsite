@@ -75,7 +75,7 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  	});
 
  	
- 	if(userCookie && userCookie.user){
+ 	if(userCookie && userCookie.user._class){
  		// GET POSTS OF PEOPLE IN MY CLASS
  		postsFactory.getPostsByArray(userCookie.user._class._users, function(data){
 	 		console.log('PEOPLE IN MY CLASS POSTS:' ,data);
