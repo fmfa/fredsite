@@ -1,4 +1,4 @@
-myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope){
+myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService){
 
 	console.log('ADMIN CONTROLLER');
 
@@ -149,7 +149,27 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 
 		};
 	};
+	//Chnage logo function 
+	$scope.uploadFiles = function (file) {
+		console.log(file);
+		file.url = 'logo.jpg'
 
+		// console.log('this is the file',file);
+	    S3UploadService.Upload(file).then(function(result) {
+	        // Mark as success
+	        $scope.success = true;
+	    }, function(error)  {
+	        // Mark the error
+	        $scope.error = error;
+	    }, function (progress) {
+	        // Write the progress as a percentage
+	        $scope.progress = (progress.loaded / progress.total) * 100
+	        console.log(progress);
+            setTimeout(function(){
+        		location.reload()
+			}, 1200)
+	    });
+    };
 	
 
  	// $scope.unblockUser=function(user_id){

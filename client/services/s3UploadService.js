@@ -1,4 +1,5 @@
 myApp.service('S3UploadService', ['$q', function ($q) {
+    console.log("inside the s3upload service")
     // Us standard region
     AWS.config.region = 'us-west-1';
     AWS.config.update({ accessKeyId: 'fake', secretAccessKey: 'fake' });
