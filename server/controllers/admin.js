@@ -27,6 +27,47 @@ module.exports = (function() {
 			})
 		},
 
+		getClassToRemoveUser: function(req, res){
+			Class.find({_id: req.params.class_id}).populate('_users').exec(function(err, classes){
+				if(err){
+					console.log(err);
+					// console.log('getmongooses function mongooses controller');
+				} else {
+					res.json(classes);
+				}
+			})
+		},
+
+		deleteRelationshipUserAndClass: function(req, res){
+			console.log("getClassToRemoveUser", req.body);
+			Class.find({_id: req.body.class}, function(err, found_class){
+				if(err){
+					console.log(err);
+					// console.log('getmongooses function mongooses controller');
+				} else {
+					console.log("**********found class***********", found_class[0]);
+					for(var i=0; i < found_class[0]._users.length; i++){
+						if(found_class[0]._users[i] == req.body.user){
+							 found_class[0]._users[i] = found_class[0]._users[found_class[0]._users.length-1];
+							 found_class[0]._users.pop();
+						}
+					}
+					found_class[0].save();
+				}
+			});
+			User.find({_id: req.body.user}, function(err, found_user){
+				if(err){
+					console.log(err);
+				}
+				else{
+					found_user[0]._class = "";
+					found_user[0].save();
+				}
+				res.json(found_user);
+			});
+
+		},
+
 		searchForUser: function(req, res){
 			console.log("searchForUser: ", req.body);
 			User.find({first_name: req.body.firstName, last_name: req.body.lastName}, function(err, users){

@@ -122,6 +122,9 @@ module.exports = (function (){
           res.send({status:500, message: 'Invailid password. Please check again!', type:'internal'});
           // res.json(err);
         }
+        else if(user.blocked){
+          res.send({status:500, message: 'Account restricted. Please contact administrator.', type:'internal'});
+        }
         else{
 
             if(isvalidPassword(req.body.password, user.password)){

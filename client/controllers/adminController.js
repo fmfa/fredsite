@@ -3,6 +3,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 	console.log('ADMIN CONTROLLER');
 
 	var userCookie = authFact.getUserCookie();
+	var classToRemoveUserFrom;
 
 	console.log('global var userCookie: ', userCookie);
 
@@ -98,7 +99,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showAddUserToClass = false;
 				console.log('seeFlaggedPosts: ', $scope.seeFlaggedPosts);
 		 		adminFactory.getClasses(function(data){
-					console.log('Here are the classes:',data);
+					console.log('Here are the classes*********:',data);
 					$scope.getClasses = data;
 				});
 		 	}
@@ -130,6 +131,44 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 		adminFactory.addUserToClass(info, function(data){
 		 			console.log(data);
 		 			$scope.userAdded = "User was added";
+		 		})
+		 	}
+
+		 	$scope.backFromSearchForUser = function(){
+		 		$scope.seeFlaggedPosts = false;
+				$scope.manageUsers = false;
+				$scope.showClasses = true;
+				$scope.showAddUserToClass = false;
+		 	}
+
+		 	$scope.removeUserFromClass = function(class_id, class_name){
+		 		$scope.seeFlaggedPosts = false;
+				$scope.manageUsers = false;
+				$scope.showClasses = false;
+				$scope.showAddUserToClass = false;
+				$scope.removeUser=true;
+				var class_id = class_id;
+
+				classToRemoveUserFrom = class_id;
+				// console.log("classToRemoveUserFrom:",classToRemoveUserFrom);
+
+				$scope.classNameToRemoveUser = class_name;
+				adminFactory.getClassToRemoveUser(class_id, function(data){
+					console.log('Here is the class ********:',data);
+					$scope.getClass = data[0];
+				});
+		 	}
+
+		 	$scope.deleteRelationshipUserAndClass = function(user_id){
+		 		console.log(user_id, classToRemoveUserFrom);
+		 		var toRemove = {
+		 			user: user_id,
+		 			class: classToRemoveUserFrom
+		 		}
+		 		adminFactory.deleteRelationshipUserAndClass(toRemove, function(data){
+		 			console.log("Removed User from class");
+		 			console.log(data);
+		 			
 		 		})
 		 	}
 
