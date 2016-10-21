@@ -11,6 +11,11 @@ myApp.factory('postsFactory', function($http){
 			callback(data.data);
 		});
 	}
+	factory.getPostsByArray = function(array, callback){
+		$http.post('/posts/array', array).then(function(data){
+			callback(data.data);
+		});
+	}
 
 	factory.addPost = function(info, callback){
 		// console.log('info:', info)

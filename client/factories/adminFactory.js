@@ -1,9 +1,10 @@
 myApp.factory('adminFactory', function ($http, $cookies){
     var users = [];
     var factory = {};
-
+    var classes = {}
     factory.getClasses = function(callback){
     $http.get('/getClasses').then(function(data){
+      classes = data.data;
       callback(data.data);
     });
   }
@@ -38,6 +39,10 @@ myApp.factory('adminFactory', function ($http, $cookies){
       callback(data.data);
     });
   }
+  factory.sendRegistrationEmail = function(email){
+    $http.post('/registrationEmail', email);
+  }
+
 
     return factory;
 });

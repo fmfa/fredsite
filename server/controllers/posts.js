@@ -49,7 +49,22 @@ module.exports = (function() {
 				}
 			})
 		},
-
+		getPostsByArray: function(req, res){
+			// console.log('THIS IS REQ.body', req.body);
+			Post.find()
+			  .where('_user_id')
+			  .in(req.body)
+			  .populate('comments')
+			  .populate('_user_id')
+			  .sort({created_at: -1})
+			  .exec(function (err, docs) {
+			    	if (err) {
+						console.log('ERROR:', err)
+					}
+					console.log('::::DOCS:::::',docs);
+					res.json(docs);
+			  });
+		},
 		searchPosts: function(req, res){
  			// console.log(req.body.text);
  			Post.find({$or: [

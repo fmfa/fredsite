@@ -1,4 +1,4 @@
-myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope){
+myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService){
 
 	console.log('ADMIN CONTROLLER');
 
@@ -122,16 +122,22 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 		})
 		 	}
 
-		 	$scope.addThisUserToClass = function(user_id, class_id){
-		 		console.log('user_id: ', user_id, "class_id: ", class_id);
+		 	$scope.addThisUserToClass = function(user_id, class_id, email){
+		 		console.log('user_id: ', user_id, "class_id: ", class_id, "email: ", email);
 		 		var info = {
 		 			user_id: user_id,
 		 			class_id: class_id
 		 		};
-		 		adminFactory.addUserToClass(info, function(data){
-		 			console.log(data);
-		 			$scope.userAdded = "User was added";
-		 		})
+		 		// adminFactory.addUserToClass(info, function(data){
+		 		// 	console.log(data);
+		 		// 	$scope.userAdded = "User was added";
+		 		// })
+		 		var email = {
+		 			email: email
+		 		}
+		 		adminFactory.sendRegistrationEmail(email); 
+
+
 		 	}
 
 		 	$scope.backFromSearchForUser = function(){
@@ -188,7 +194,28 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 
 		};
 	};
+	//Chnage logo function 
+	$scope.uploadFiles = function (file) {
+		console.log(file);
+		file.url = 'logo.jpg'
 
+		// console.log('this is the file',file);
+	    S3UploadService.Upload(file).then(function(result) {
+	        // Mark as success
+	        $scope.success = true;
+	    }, function(error)  {
+	        // Mark the error
+	        $scope.error = error;
+	    }, function (progress) {
+	        // Write the progress as a percentage
+	        $scope.progress = (progress.loaded / progress.total) * 100
+	        console.log(progress);
+            setTimeout(function(){
+        		location.reload()
+			}, 1200)
+	    });
+    };
+	
 	
 
  	// $scope.unblockUser=function(user_id){

@@ -1,17 +1,19 @@
 var postsController = require('../controllers/posts.js')
 var usersController = require('../controllers/users.js')
 var adminController = require('../controllers/admin.js')
-
+var mailerController = require('../controllers/mailer.js')
  module.exports = function(app){
 
  	app.post('/posts', function(req, res){
  		postsController.makePost(req, res);
  	})
-
  	app.post('/search', function(req, res){
  		// console.log('search posts query');
  		postsController.searchPosts(req, res);
  	})
+  app.post('/posts/array', function(req, res){
+    postsController.getPostsByArray(req, res);
+  })
  	app.get('/posts', function(req, res){
  		postsController.getPosts(req, res);
  	})
@@ -88,11 +90,7 @@ var adminController = require('../controllers/admin.js')
     // console.log('got to the destroy user route');
     usersController.destroyUser(req, res);
   })
-  // app.post('/silliconValleyFacesWall', function (req, res){
-    // console.log('Back-end routes -- app.get /silliconValleyFacesWall ');
-    // console.log('welcome to silliconValleyFacesWall');
-  // });
-
+  
   app.post('/imgUrl/:id', function(req, res){
     // console.log('made it to the upload image route')
     usersController.uploadUrl(req, res);
@@ -137,14 +135,24 @@ var adminController = require('../controllers/admin.js')
     usersController.updatePassword(req, res);
   });
 
+  app.post('/followUser', function(req, res){
+    usersController.followUser(req, res);
+  });
+
+  app.post('/unfollowUser', function(req, res){
+    usersController.unfollowUser(req, res);
+  });
+
   app.post('/addUser', function(req, res){
     adminController.addUserToClass(req, res);
   });
 
   app.post('/blockUser', function(req, res){
-    console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
+    // console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
     adminController.blockUser(req, res);
   });
-
+  app.post('/registrationEmail', function(req, res){
+    mailerController.registration(req, res);
+  }); 
 
 }

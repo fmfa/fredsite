@@ -21,7 +21,7 @@ myApp.factory('authFact', function ($http, $cookies){
     };
 
 
-    authFact.setUserCookie= function(_id, first_name, last_name, email, phone, user_level){
+    authFact.setUserCookie= function(_id, first_name, last_name, email, phone, user_level, _class, _following){
       var userCookie = {
         user:{  _id: _id,
                 first_name: first_name,
@@ -29,6 +29,8 @@ myApp.factory('authFact', function ($http, $cookies){
                 email: email,
                 phone: phone,
                 user_level: user_level,
+                _class: _class,
+                _following: _following
               }
           };
       $cookies.putObject('userCookie', userCookie);
@@ -38,6 +40,13 @@ myApp.factory('authFact', function ($http, $cookies){
       //use the following code if any conflict occurred
     authFact.getUserCookie = function(){
       return $cookies.getObject('userCookie');
+    };
+
+    authFact.setFollow= function(_following){
+      var userCookie = authFact.getUserCookie();
+      userCookie.user._following = _following;
+      $cookies.putObject('userCookie', userCookie);
+      console.log("EDDITING COOKIE WITH following", userCookie);
     };
 
     return authFact;

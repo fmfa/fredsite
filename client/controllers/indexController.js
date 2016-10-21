@@ -1,16 +1,47 @@
 myApp.controller('indexController', function($scope, $rootScope, $location, $window, $timeout, $cookies, $sce, authFact, postsFactory, usersFactory, Upload, S3UploadService){
 
-// the following code is for switching navbarLogin bars based on different routes. navbar files are in '/partials/navbarLogin.html'  and '/partials/navbarWall.html'
-	// $scope.$on('$locationChangeSuccess', function($routeParams) {
-  //       var path = $location.path();
-  //       var product_id = $routeParams.product_id;
-  //
-  //       $scope.templateUrl = (path === '/' || path === '/login' || path === '/register') ? '/partials/navbarLogin.html' : '/partials/navbarWall.html';
-  //   });
-// End of switching navigation bar
-
 
 	$scope.comment = {};
+
+
+	$scope.choice = 'all';
+	$scope.choose = function(whichOne){
+	    $scope.choice = whichOne;
+	    console.log('scope.choice', $scope.choice)
+	}
+
+	$scope.follow = function(userId){
+		var userInfo = {
+			follower: userCookie.user._id,
+			following: userId
+		}
+		usersFactory.followUser(userInfo, function(data){
+			console.log('back in controller', data);
+			postsFactory.getPostsByArray(data.data._following, function(dat){
+		 		console.log('PEOPLE I FOLLOW POSTS:' ,dat);
+		 		$scope.followingPosts = dat;
+				authFact.setFollow($scope.followingPosts);
+		 	});
+			// console.log('FOLLOWIN POSTs:', $scope.followingPosts)
+		})
+	}
+
+	$scope.unfollow = function(userId){
+		var userInfo = {
+			follower: userCookie.user._id,
+			following: userId
+		}
+		usersFactory.unfollowUser(userInfo, function(data){
+			console.log('back in controller', data.data);
+			postsFactory.getPostsByArray(data.data._following, function(dat){
+		 		console.log('PEOPLE I FOLLOW POSTS:' ,dat);
+		 		$scope.followingPosts = dat;
+		 		authFact.setFollow($scope.followingPosts);
+		 	});
+			// console.log('FOLLOWIN POSTs:', $scope.followingPosts)
+			
+		})
+	}
 
 	var userCookie = authFact.getUserCookie();
 
@@ -25,16 +56,10 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 		return $sce.trustAsResourceUrl(src);
 	};
 
-	//#######################################################
-	//use the following code if any conflict occurred
-	// Check if user data is in cookies and assign user data to $rootScope.user
 	if(authFact.getUserCookie()){
-		console.log("@~@~@~@~@ got user cookies");
 		$rootScope.user = userCookie.user;
 		$rootScope.user.url = 'https://s3-us-west-1.amazonaws.com/siliconvalleyfaces/'+userCookie.user._id+'.jpg'
 	}
-	//#######################################################
-	//use the above code if any conflict occurred
 
 
 	refreshPosts = function (){
@@ -45,13 +70,28 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 	};
 
 	postsFactory.getPosts(function(data){
- 		console.log(data);
+ 		console.log('ALL POSTS:', data);
  		$scope.posts = data;
-
  	});
 
+ 	
+ 	if(userCookie && userCookie.user._class){
+ 		// GET POSTS OF PEOPLE IN MY CLASS
+ 		postsFactory.getPostsByArray(userCookie.user._class._users, function(data){
+	 		console.log('PEOPLE IN MY CLASS POSTS:' ,data);
+	 		$scope.myClassPosts = data;
+	 	});
+	 	// GET POSTS OF PEOPLE I FOLLOW
+	 	postsFactory.getPostsByArray(userCookie.user._following, function(data){
+	 		console.log('PEOPLE I FOLLOW POSTS:' ,data);
+	 		$scope.followingPosts = data;
+	 	});
+ 	}
+
+ 	
+
+
 	$scope.feed = true;
-	// $scope.posts = [];
 	$scope.search = {};
 
 	$scope.reset = function(){
@@ -201,15 +241,6 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 
 		});
 	};
-
-
-//use the above code if any conflict occurred
-//#######################################################
-
-
-//##############################################
-// Login and Register
-//##############################################
 
 	$scope.logout = function(){
 

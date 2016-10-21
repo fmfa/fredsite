@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var User = mongoose.model('users');
 var Class = mongoose.model('classes');
 var passport = require('passport');
-//var bCrypt = require('bcrypt-nodejs');
 var bcrypt = require('bcryptjs');
 
 var secretPassword = function(password){
@@ -72,6 +71,51 @@ module.exports = (function (){
                 }
             });
     },
+    followUser: function (req, res){
+      console.log('req.body: ',req.body);
+      User.findOne({_id:req.body.follower}, function(err, user) {
+                if (err) {
+                    console.log('ERROR FINDING USER',err);
+                } 
+                else {
+                    user._following.push(req.body.following) 
+                    user.save(function(erro){
+                      if(erro){
+                        console.log('ERROR FOLLOWING', erro)
+                        res.json({error: erro});
+                      }
+                      else{
+                        console.log('success following', user)
+                        res.json(user);
+                      }
+                    });
+                }
+            });
+    },
+    unfollowUser: function (req, res){
+      console.log('req.body: ',req.body);
+      User.findOne({_id:req.body.follower}, function(err, user) {
+                if (err) {
+                    console.log('ERROR FINDING USER',err);
+                } 
+                else {
+                    console.log('BEFORE SPLICE:', user)
+                    var index = user._following.indexOf(req.body.following);
+                    user._following.splice(index, 1); 
+                    console.log('AFTER SPLICE:', user)
+                    user.save(function(erro){
+                      if(erro){
+                        console.log('ERROR FOLLOWING', erro)
+                        res.json({error: erro});
+                      }
+                      else{
+                        console.log('success UNfollowing', user)
+                        res.json(user);
+                      }
+                    });
+                }
+            });
+    },
     updatePassword: function (req, res){
       // console.log('req.body: ',req.body);
       User.findOne({_id:req.body.userId}, function(err, user) {
@@ -97,20 +141,51 @@ module.exports = (function (){
           }
       });
     },
-    // userInformation: function (req, res){
-    //   console.log("*@*@* Back-end controller -- users.js -- userInformation ***");
-    //   console.log('req.session: ',req.session);
-    //   User.find({_id:req.session.userId}, function(err, users) {
-    //             if (err) {
-    //                 console.log(err);
-    //             } else {
-    //                 res.json(users);
-    //             }
-    //         });
+    userInformation: function (req, res){
+      console.log("*@*@* Back-end controller -- users.js -- userInformation ***");
+      console.log('req.session: ',req.session);
+      User.find({_id:req.session.userId}, function(err, users) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json(users);
+                }
+            });
+    },
+    // login: function (req, res){
+    //   // console.log("*@*@* Back-end controller -- users.js -- logIn ***");
+    //   User.findOne({email: req.body.email}, function (err, user){
+    //     var verifyPassword = req.body.password;
+    //     if(!user){
+    //       console.log(err);
+    //       res.send({status:500, message: 'Sorry, the user account does not exist. Please check again!', type:'internal'});
+    //     }
+    //     else if(!isvalidPassword(req.body.password, user.password) ){
+    //       console.log(err);
+    //       // err = "Incorrect password. Please check again!";
+    //       res.send({status:500, message: 'Invailid password. Please check again!', type:'internal'});
+    //       // res.json(err);
+    //     }
+    //     else{
+
+    //         if(isvalidPassword(req.body.password, user.password)){
+    //               console.log("user", user);
+    //       //   // eddys work
+    //       // if(req.body.password === user.password){
+    //             // req.session.userFirstName = user.first_name;
+    //             // req.session.userLastName = user.last_name;
+    //             // req.session.userId = user._id;
+    //             // req.session.userEmail = user.email;
+    //             res.send({status:200, userCookie: user, authentication: true, type:'internal'});
+    //       }
+    //     }
+    //   });
     // },
     login: function (req, res){
-      // console.log("*@*@* Back-end controller -- users.js -- logIn ***");
-      User.findOne({email: req.body.email}, function (err, user){
+      console.log("*@*@* Back-end controller -- users.js -- logIn ***");
+      User.findOne({email: req.body.email})
+      .populate('_class')
+      .exec(function (err, user){
         var verifyPassword = req.body.password;
         if(!user){
           console.log(err);
@@ -118,9 +193,7 @@ module.exports = (function (){
         }
         else if(!isvalidPassword(req.body.password, user.password) ){
           console.log(err);
-          // err = "Incorrect password. Please check again!";
           res.send({status:500, message: 'Invailid password. Please check again!', type:'internal'});
-          // res.json(err);
         }
         else if(user.blocked){
           res.send({status:500, message: 'Account restricted. Please contact administrator.', type:'internal'});
