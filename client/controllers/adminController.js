@@ -121,16 +121,22 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 		})
 		 	}
 
-		 	$scope.addThisUserToClass = function(user_id, class_id){
-		 		console.log('user_id: ', user_id, "class_id: ", class_id);
+		 	$scope.addThisUserToClass = function(user_id, class_id, email){
+		 		console.log('user_id: ', user_id, "class_id: ", class_id, "email: ", email);
 		 		var info = {
 		 			user_id: user_id,
 		 			class_id: class_id
 		 		};
-		 		adminFactory.addUserToClass(info, function(data){
-		 			console.log(data);
-		 			$scope.userAdded = "User was added";
-		 		})
+		 		// adminFactory.addUserToClass(info, function(data){
+		 		// 	console.log(data);
+		 		// 	$scope.userAdded = "User was added";
+		 		// })
+		 		var email = {
+		 			email: email
+		 		}
+		 		adminFactory.sendRegistrationEmail(email); 
+
+
 		 	}
 
 		 	$scope.blockUser=function(user_id){
@@ -170,6 +176,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 			}, 1200)
 	    });
     };
+	
 	
 
  	// $scope.unblockUser=function(user_id){

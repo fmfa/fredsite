@@ -1,7 +1,7 @@
 var postsController = require('../controllers/posts.js')
 var usersController = require('../controllers/users.js')
 var adminController = require('../controllers/admin.js')
-
+var mailerController = require('../controllers/mailer.js')
  module.exports = function(app){
 
  	app.post('/posts', function(req, res){
@@ -143,6 +143,8 @@ var adminController = require('../controllers/admin.js')
     // console.log("\n\n\n\n\n********************************************got to blockUser\n\n\n\n\n\n", req.body);
     adminController.blockUser(req, res);
   });
-
+  app.post('/registrationEmail', function(req, res){
+    mailerController.registration(req, res);
+  }); 
 
 }

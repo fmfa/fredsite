@@ -25,6 +25,7 @@
                               </div>
                                 <input  class="btn btn-primary btn-lg" type="submit" value="Login"  ng-click="login(loginInfo)">
                           </form>
+                          <a href="" data-toggle='modal' data-target='#forgotPassword'>Forgot password?</a>
                           <br>
                           <h4 style="color:red">{{ errorMsg }}</h4>
                       </div>
@@ -34,3 +35,24 @@
       </div>
   </section>
 </div>
+
+<!-- forgot password modal -->
+<div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Forgot Password?</h4>
+                    </div>
+                    <!-- <div class="modal-body" ng-controller = 'MyCtrl'> -->
+                     <div class="modal-body">
+                        <h5>Enter the email associated with your account. We'll send you an email with a link to reset your password: </h5>
+                        <input placeholder="email">
+                        <button>Submit</button>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
