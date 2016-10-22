@@ -1,3 +1,4 @@
+var secret = require('secret.js')
 // nodemailer setup
 var nodemailer = require('nodemailer'); 
 var smtpConfig ={
@@ -6,8 +7,8 @@ var smtpConfig ={
   port: 465, 
   secure: true, 
   auth: {
-    user: 'yeungportfolioandrew@gmail.com', 
-    pass: 'zmbg287b' 
+    user: secret.email, 
+    pass: secret.password 
   }, 
   tls:{
     secureProtocol: "TLSv1_method"

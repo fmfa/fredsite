@@ -26,6 +26,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 			$scope.showManageClasses = false;
 			$scope.showClasses = false;
 			$scope.showAddUserToClass = false;
+			$scope.showEmails = false;
 
 			postsFactory.getFlaggedPosts(function(data){
 				console.log(data);
@@ -78,7 +79,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				console.log('THIS IS ALL THE USERS:',data);
 				$scope.users = data.data;
 				});
-
+		 		$scope.showEmails = false;
 				$scope.seeFlaggedPosts = false;
 				$scope.manageUsers = true;
 				$scope.showClasses = false;
@@ -90,11 +91,13 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.manageUsers = false;
 				$scope.showClasses = false;
 				$scope.showAddUserToClass = false;
+				$scope.showEmails = false;
 		 	}
 
 		 	$scope.manageClasses = function(){
 		 		$scope.seeFlaggedPosts = false;
 				$scope.manageUsers = false;
+				$scope.showEmails = false;
 				$scope.showClasses = true;
 				$scope.showAddUserToClass = false;
 				console.log('seeFlaggedPosts: ', $scope.seeFlaggedPosts);
@@ -109,7 +112,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.manageUsers = false;
 				$scope.showClasses = false;
 				$scope.showAddUserToClass = true;
-
+				$scope.showEmails = false;
 		 		$scope.classNameToAddUser = name;
 		 		$scope.classIdToAddUser = id;
 		 	}
@@ -128,14 +131,14 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 			user_id: user_id,
 		 			class_id: class_id
 		 		};
-		 		// adminFactory.addUserToClass(info, function(data){
-		 		// 	console.log(data);
-		 		// 	$scope.userAdded = "User was added";
-		 		// })
-		 		var email = {
-		 			email: email
-		 		}
-		 		adminFactory.sendRegistrationEmail(email); 
+		 		adminFactory.addUserToClass(info, function(data){
+		 			console.log(data);
+		 			$scope.userAdded = "User was added";
+		 		})
+		 		// var email = {
+		 		// 	email: email
+		 		// }
+		 		// adminFactory.sendRegistrationEmail(email); 
 
 
 		 	}
@@ -145,6 +148,14 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.manageUsers = false;
 				$scope.showClasses = true;
 				$scope.showAddUserToClass = false;
+				$scope.showEmails = false;
+		 	}
+		 	$scope.showemailForm=function(){
+				$scope.seeFlaggedPosts = false;
+				$scope.manageUsers = false;
+				$scope.showClasses = false;
+				$scope.showAddUserToClass = false;
+				$scope.showEmails = true;
 		 	}
 
 		 	$scope.removeUserFromClass = function(class_id, class_name){
@@ -153,6 +164,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showClasses = false;
 				$scope.showAddUserToClass = false;
 				$scope.removeUser=true;
+				$scope.showEmails = false;
 				var class_id = class_id;
 
 				classToRemoveUserFrom = class_id;

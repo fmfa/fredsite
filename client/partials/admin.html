@@ -13,7 +13,26 @@
 
 	<button class="btn btn-primary btn-lg" ng-Click="showFlaggedPosts()">See Flagged Posts</button>
 
-	<button class="btn btn-primary btn-lg">Manage Closed</button>
+	<button class="btn btn-primary  btn-lg">Manage Closed</button>
+
+	<button ng-click="showemailForm()" class="btn btn-primary  btn-lg">Send Registration Email</button>
+
+	<!-- send registration email START -->
+	<div ng-if="showEmails">
+		<div class="container">
+			<form>
+				<h5>Send registration link to students: (separate emails by ,)</h5>
+				<input type="email" ng-model=''>
+				<button ng-click="sendRegistration()">Submit</button>
+			</form>
+		</div>
+	</div> 
+	<!-- send registration email END -->
+
+
+
+
+
 
 	<!-- Change logo modal -->
 	<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -115,7 +134,7 @@
 		class_id: {{classIdToAddUser}}
 			<p>{{f.first_name}} {{f.last_name}}</p>
 			<p>{{f.email}} {{f.createdAt}}</p>
-			<button ng-click="addThisUserToClass(f._id, classIdToAddUser, f.email)">Add To Class and Send Registration Email</button>
+			<button ng-click="addThisUserToClass(f._id, classIdToAddUser)">Add To Class</button>
 		</div>
 	</div>
 </div>
@@ -127,7 +146,6 @@
 	<ul>
 		<li ng-repeat="u in getClass._users">{{u.first_name}} {{u.last_name}} <button ng-click="deleteRelationshipUserAndClass(u._id)">Remove from Class</button></li>
 	</ul>
-	
 </div>
 
 <div ng-if="seeFlaggedPosts">
@@ -203,6 +221,9 @@
 </div>
 </div>
 </div> <!-- end manage users -->
+
+
+
 
 
 <!-- <div ng-if="manageUsers"> -->
