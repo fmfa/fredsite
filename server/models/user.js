@@ -49,7 +49,8 @@ var UserSchema = new mongoose.Schema({
       type : Number,
       default: 1,
     },
-
+    resetPasswordExpires: Date,
+    resetPasswordToken: String,
     blocked: {
       type: Boolean,
       default: false

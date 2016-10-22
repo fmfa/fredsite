@@ -10,6 +10,9 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+// reset password 
+
+var crypto = require('crypto');
 
 
 

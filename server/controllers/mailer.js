@@ -6,8 +6,8 @@ var smtpConfig ={
   port: 465, 
   secure: true, 
   auth: {
-    user: 'fake@gmail.com', 
-    pass: 'fake' 
+    user: 'yeungportfolioandrew@gmail.com', 
+    pass: 'zmbg287b' 
   }, 
   tls:{
     secureProtocol: "TLSv1_method"
@@ -36,6 +36,23 @@ module.exports = (function() {
         }
         console.log('Message sent: ' + info.response);
     });
+    }, 
+
+    forgotPassword: function(req, res){
+      var mailOptions = {
+          from: 'FMFA@fmfa.org', 
+          to: req.body.email, // list of receivers 
+          subject: 'FMFA Inc. Password Reset', // Subject line 
+          text:'You are receiving this because you (or someone else) have requested the reset of the password for your account. \n Please click on the following link, or paste this into your browser to complete the process: \n LINK \n If you did request this, please ignore this email and your password will remain unchanged.'        
+      };
+      console.log('this is the mail options', mailOptions); 
+
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log('this is the ', error);
+          }
+          console.log('Message sent: ' + info.response);
+      });
     }
   }
 })();

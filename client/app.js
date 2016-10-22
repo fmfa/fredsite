@@ -72,6 +72,10 @@ myApp.directive('ngReallyClick', [function() {
                 controller: 'admin_loginController',
                 templateUrl: "partials/admin_login.html"
             })
+            .when('/reset/:id', {
+                controller: "loginController",
+                templateUrl: "partials/reset.html"
+            })
             .otherwise({
                 redirectTo: '/login'
             });
