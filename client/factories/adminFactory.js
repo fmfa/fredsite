@@ -9,6 +9,12 @@ myApp.factory('adminFactory', function ($http, $cookies){
     });
   }
 
+  factory.getClassToRemoveUser = function(class_id, callback){
+    $http.get('/getClassToRemoveUser/'+class_id).then(function(data){
+      callback(data.data);
+    });
+  }
+
   factory.searchForUser = function(user, callback){
     $http.post('/searchForUser', user).then(function(data){
       callback(data.data);
@@ -17,6 +23,12 @@ myApp.factory('adminFactory', function ($http, $cookies){
 
   factory.addUserToClass = function(info, callback){
     $http.post('/addUser', info).then(function(data){
+      callback(data.data);
+    });
+  }
+
+  factory.deleteRelationshipUserAndClass = function(info, callback){
+    $http.post('/deleteRelationshipUserAndClass', info).then(function(data){
       callback(data.data);
     });
   }

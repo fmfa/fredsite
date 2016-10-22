@@ -109,12 +109,20 @@ var mailerController = require('../controllers/mailer.js')
     adminController.searchForUser(req, res);
   });
 
+  app.post('/deleteRelationshipUserAndClass', function (req, res){
+    adminController.deleteRelationshipUserAndClass(req, res);
+  });
+
   app.get('/flagged_posts', function(req, res){
  		postsController.getFlaggedPosts(req, res);
  	});
 
   app.get('/getClasses', function(req, res){
     adminController.getClasses(req, res);
+  });
+
+  app.get('/getClassToRemoveUser/:class_id', function(req, res){
+    adminController.getClassToRemoveUser(req, res);
   });
 
   app.post('/createClass', function (req, res){

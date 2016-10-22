@@ -85,6 +85,10 @@
 	</ul>
 	<button>Close Class</button>
 	<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+
+	<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
+	<button>Delete Class</button>
+
 <!-- 	<form ng-submit="sendRegistration()">
 		<input type="submit" id="submit" value="Send Registration Email to Users">
 	
@@ -93,10 +97,12 @@
 	 -->
 	
 
+
 </div>
 </div>
 
 <div ng-if="showAddUserToClass">
+	<button ng-click="backFromSearchForUser()">Back</button>
 	<h4>Add user to class: {{classNameToAddUser}}</h4>
 	<p>Search</p>
 	<p>First Name: <input type="text" ng-model="findUser.firstName"></p>
@@ -112,6 +118,16 @@
 			<button ng-click="addThisUserToClass(f._id, classIdToAddUser, f.email)">Add To Class and Send Registration Email</button>
 		</div>
 	</div>
+</div>
+
+<div ng-if="removeUser">
+	<button ng-click="backFromSearchForUser()">Back</button>
+	<h4>Remove User from class: {{classNameToRemoveUser}}</h4>
+	<!-- {{getClass._users[0].first_name}} -->
+	<ul>
+		<li ng-repeat="u in getClass._users">{{u.first_name}} {{u.last_name}} <button ng-click="deleteRelationshipUserAndClass(u._id)">Remove from Class</button></li>
+	</ul>
+	
 </div>
 
 <div ng-if="seeFlaggedPosts">
