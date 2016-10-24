@@ -1,4 +1,5 @@
-myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService){
+myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService, mailFactory){
+	$scope.regEmail = {}; 
 
 	console.log('ADMIN CONTROLLER');
 
@@ -139,7 +140,16 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 		// 	email: email
 		 		// }
 		 		// adminFactory.sendRegistrationEmail(email); 
-
+		 	}
+		 	$scope.sendRegistration = function(){
+		 		console.log($scope.regEmail); 
+		 		mailFactory.sendRegistrationEmail($scope.regEmail, function(data){
+		 			console.log(data); 
+		 			if(data.status == 500){
+		 				$scope.errorMessage = data.message;
+		 			}
+		 		}); 
+		 		$scope.regEmail = {}; 
 
 		 	}
 

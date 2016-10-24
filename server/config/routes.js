@@ -154,5 +154,7 @@ var mailerController = require('../controllers/mailer.js')
   app.post('/registrationEmail', function(req, res){
     mailerController.registration(req, res);
   }); 
-
+  app.post('/forgotEmail', function(req, res){
+    mailerController.forgotEmail(req, res);
+  }); 
 }

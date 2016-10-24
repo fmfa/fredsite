@@ -1,5 +1,10 @@
-myApp.controller('loginController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory){
-
+myApp.controller('loginController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, mailFactory){
+    $scope.forgot = {};
+    $scope.forgotEmail = function(forgot){
+      // console.log(forgot);   
+      mailFactory.forgotEmail(forgot);
+      $scope.forgot = {}; 
+    }
 
     $scope.register = function (){
       // console.log("*** front-end indexController -- $scope.register ***");

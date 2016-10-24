@@ -1,4 +1,4 @@
-var secret = require('secret.js')
+var secret = require('./app.js')
 // nodemailer setup
 var nodemailer = require('nodemailer'); 
 var smtpConfig ={
@@ -32,6 +32,7 @@ module.exports = (function() {
     console.log('this is the mail options', mailOptions); 
 
     transporter.sendMail(mailOptions, function(error, info){
+        console.log('inside the transporter')
         if(error){
             return console.log('this is the ', error);
         }
@@ -39,7 +40,7 @@ module.exports = (function() {
     });
     }, 
 
-    forgotPassword: function(req, res){
+    forgotEmail: function(req, res){
       var mailOptions = {
           from: 'FMFA@fmfa.org', 
           to: req.body.email, // list of receivers 

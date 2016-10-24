@@ -47,8 +47,8 @@
                     <!-- <div class="modal-body" ng-controller = 'MyCtrl'> -->
                      <div class="modal-body">
                         <h5>Enter the email associated with your account. We'll send you an email with a link to reset your password: </h5>
-                        <input placeholder="email">
-                        <button>Submit</button>
+                        <input placeholder="email" ng-model="forgot.email">
+                        <button ng-click="forgotEmail(forgot)">Submit</button>
                     </div>
                     <div class="modal-footer">
 
