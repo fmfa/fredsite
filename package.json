@@ -4,6 +4,7 @@
   "dependencies": {
     "angular-password": "^1.0.1",
     "angular-youtube-embed": "^1.3.0",
+    "async": "^2.1.2",
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
