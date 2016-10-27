@@ -2,6 +2,7 @@ myApp.factory('adminFactory', function ($http, $cookies){
     var users = [];
     var factory = {};
     var classes = {}
+    
     factory.getClasses = function(callback){
     $http.get('/getClasses').then(function(data){
       classes = data.data;

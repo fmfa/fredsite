@@ -314,7 +314,7 @@ module.exports = (function (){
       });
     },
     createClass: function (req, res){
-      // console.log(req.body, 'REQ BODY')
+      // console.log(req.body, '*******************REQ BODY***************************')
       var newClass = new Class(req.body);
       newClass.save(function (err, result){
         if(err){
