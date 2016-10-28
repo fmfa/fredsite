@@ -100,6 +100,16 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				});
 			};
 
+			$scope.deleteClass = function(classId){
+				adminFactory.deleteClass(classId, function(status){
+					console.log("status", status);
+					// postsFactory.getFlaggedPosts(function(data){
+					// // console.log(data);
+					// $scope.flaggedPosts = data;
+				// });
+				});
+			};
+
 			$scope.deleteUser = function(userId){
 				usersFactory.deleteUser(userId, function(data){
 					console.log('removed this user:', data);

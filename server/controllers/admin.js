@@ -27,6 +27,17 @@ module.exports = (function() {
 			})
 		},
 
+		deleteClass: function(req, res){
+			Class.find({_id: req.params.id}).remove().exec(function(err, deletedClass){
+				if(err){
+					console.log(err);
+					// console.log('getmongooses function mongooses controller');
+				} else {
+					res.json("class deleted");
+				}
+			})
+		},
+
 		getClassToRemoveUser: function(req, res){
 			Class.find({_id: req.params.class_id}).populate('_users').exec(function(err, classes){
 				if(err){

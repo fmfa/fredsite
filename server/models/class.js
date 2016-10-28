@@ -9,6 +9,8 @@ var ClassSchema = new mongoose.Schema({
     }],
     name: String,
     description: String,
+    unique_id: String,
+    class_id: String
 
 },{timestamps: true});
 module.exports = mongoose.model('classes', ClassSchema);
