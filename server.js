@@ -10,12 +10,8 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+
 // reset password 
-
-var crypto = require('crypto');
-
-
-
 
 app.use( express.static( path.join( root, 'client' )));
 app.use(express.static(path.join(__dirname, '/client/css')));

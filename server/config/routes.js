@@ -157,4 +157,7 @@ var mailerController = require('../controllers/mailer.js')
   app.post('/forgotEmail', function(req, res){
     mailerController.forgotEmail(req, res);
   }); 
+  app.post('/upload', function(req, res){
+    mailerController.uploadExcel(req,res);
+  })
 }

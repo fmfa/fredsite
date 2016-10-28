@@ -1,5 +1,6 @@
 myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService, mailFactory){
 	$scope.regEmail = {}; 
+	$scope.forgotPassword = {}; 
 
 	console.log('ADMIN CONTROLLER');
 
@@ -13,6 +14,57 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		// console.log('user level is NOT 9')
 		$location.url('/');
 	};
+
+	$scope.uploadPic = function(file) {
+		// console.log('hi uploadpic');
+		file.upload = Upload.upload({
+			url: 'http://localhost:8000/upload',
+			data: {username: $scope.username, file: file},
+			});
+
+			file.upload.then(function (response) {
+			$timeout(function () {
+			file.result = response.data;
+			});
+			}, function (response) {
+			if (response.status > 0)
+			$scope.errorMsg = response.status + ': ' + response.data;
+			}, function (evt) {
+			// Math.min is to fix IE which reports 200% sometimes
+			file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+		});
+	}
+    
+    // $scope.upload = function (file) {
+    //     Upload.upload({
+    //         url: 'http://localhost:8000/upload', //webAPI exposed to upload the file
+    //         data:{file:file} //pass file as data, should be user ng-model
+    //     }).then(function (resp) { //upload function returns a promise
+    //         if(resp.data.error_code === 0){ //validate success
+    //             $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+    //         } else {
+    //             $window.alert('an error occured');
+    //         }
+    //     }, function (resp) { //catch error
+    //         console.log('Error status: ' + resp.status);
+    //         $window.alert('Error status: ' + resp.status);
+    //     }, function (evt) { 
+    //         console.log(evt);
+    //         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+    //         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+    //         vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+    //     });
+    // };
+
+
+
+
+
+
+
+
+
+
 
 
 	// IF THE LOGGED IN USER'S LEVEL IS 9 (ADMIN), THEN :
@@ -34,7 +86,10 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.flaggedPosts = data;
 			});
 
-			
+			$scope.resetPassword = function(email){
+				mailFactory.forgotEmail(email);
+				$scope.forgotPassword = {}; 
+			}
 
 			$scope.deletePost = function(postId){
 				postsFactory.deletePost(postId, function(status){
@@ -114,6 +169,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showClasses = false;
 				$scope.showAddUserToClass = true;
 				$scope.showEmails = false;
+				$scope.showReset = false;
 		 		$scope.classNameToAddUser = name;
 		 		$scope.classIdToAddUser = id;
 		 	}
@@ -159,6 +215,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showClasses = true;
 				$scope.showAddUserToClass = false;
 				$scope.showEmails = false;
+				$scope.showReset = false;
 		 	}
 		 	$scope.showemailForm=function(){
 				$scope.seeFlaggedPosts = false;
@@ -166,6 +223,16 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showClasses = false;
 				$scope.showAddUserToClass = false;
 				$scope.showEmails = true;
+				$scope.showReset = false;
+		 	}
+
+			$scope.showresetForm=function(){
+				$scope.seeFlaggedPosts = false;
+				$scope.manageUsers = false;
+				$scope.showClasses = false;
+				$scope.showAddUserToClass = false;
+				$scope.showEmails = false;
+				$scope.showReset = true;
 		 	}
 
 		 	$scope.removeUserFromClass = function(class_id, class_name){
@@ -175,6 +242,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 				$scope.showAddUserToClass = false;
 				$scope.removeUser=true;
 				$scope.showEmails = false;
+				$scope.showReset = false;
 				var class_id = class_id;
 
 				classToRemoveUserFrom = class_id;

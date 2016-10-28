@@ -17,6 +17,24 @@
 
 	<button ng-click="showemailForm()" class="btn btn-primary  btn-lg">Send Registration Email</button>
 
+	<button ng-click="showresetForm()" class="btn btn-primary  btn-lg">Reset Passwords for Users</button>
+
+	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#excelUpload">Upload Users (excel file)</button>
+
+	<!-- reset passwords for users -->
+		<div ng-if="showReset">
+			<div class="container">
+				<form>
+					<h5>Reset passwords for users: (separate emails by ,)</h5>
+					<input type="text" ng-model='forgotPassword.email'>
+					<button ng-click="resetPassword(forgotPassword)">Submit</button>
+				</form>
+				<span>Reset password emails have been sent!</span>
+				<h4>{{ errorMessage }}</h4>
+			</div>
+		</div> 
+	<!-- reset passwords for users END-->
+
 	<!-- send registration email START -->
 	<div ng-if="showEmails">
 		<div class="container">
@@ -30,9 +48,45 @@
 	</div> 
 	<!-- send registration email END -->
 
+	<!-- modal for excel upload -->
+
+	<div class="modal fade" id="excelUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h4 class="modal-title" id="myModalLabel">Excel Upload</h4>
+	      </div>
+	      
+
+	       <input type="file" ngf-select ng-model="picFile" name="file"    
+             required
+             ngf-model-invalid="errorFile">
+	      <i ng-show="myForm.file.$error.required">*required</i><br>
+	      <i ng-show="myForm.file.$error.maxSize">File too large 
+	          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+	      <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+	      <br>
+	      <button
+	              ng-click="uploadPic(picFile)">Submit</button>
+	      <span class="progress" ng-show="picFile.progress >= 0">
+	        <div style="width:{{picFile.progress}}%" 
+	            ng-bind="picFile.progress + '%'"></div>
+	      </span>
+	      <span ng-show="picFile.result">Upload Successful</span>
+	      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+		      
 
 
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal -->
 
+	<!-- modal for excel upload END -->
 
 
 	<!-- Change logo modal -->
