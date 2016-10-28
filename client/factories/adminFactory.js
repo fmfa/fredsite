@@ -2,10 +2,17 @@ myApp.factory('adminFactory', function ($http, $cookies){
     var users = [];
     var factory = {};
     var classes = {}
-    
+
     factory.getClasses = function(callback){
     $http.get('/getClasses').then(function(data){
       classes = data.data;
+      callback(data.data);
+    });
+  }
+
+  factory.deleteClass = function(classId, callback){
+    $http.get('/deleteClass/'+classId).then(function(data){
+      // classes = data.data;
       callback(data.data);
     });
   }

@@ -98,7 +98,7 @@
 
 <div ng-if="showClasses">
 <div  ng-repeat="c in getClasses">
-	<!-- {{c}} -->
+	{{c}}
 	<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
 	<h5>{{c.description}}</h5>
 	<h4>Users: {{c.users}}</h4>
@@ -109,7 +109,7 @@
 	<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
 
 	<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
-	<button>Delete Class</button>
+	<button ng-click='deleteClass(c._id)'>Delete Class</button>
 
 <!-- 	<form ng-submit="sendRegistration()">
 		<input type="submit" id="submit" value="Send Registration Email to Users">

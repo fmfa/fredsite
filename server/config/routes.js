@@ -121,6 +121,10 @@ var mailerController = require('../controllers/mailer.js')
     adminController.getClasses(req, res);
   });
 
+  app.get('/deleteClass/:id', function(req, res){
+    adminController.deleteClass(req, res);
+  });
+
   app.get('/getClassToRemoveUser/:class_id', function(req, res){
     adminController.getClassToRemoveUser(req, res);
   });
