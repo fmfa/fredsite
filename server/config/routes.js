@@ -77,6 +77,10 @@ var mailerController = require('../controllers/mailer.js')
 
     usersController.logout(req, res);
   });
+
+  app.get('/getProjects', function (req, res){
+    usersController.getProjects(req, res);
+  });
   app.post('/usersearch', function (req,res) {
     // console.log('Back-end routes -- app.post /usersearch ');
     // console.log('req.body', req.body);

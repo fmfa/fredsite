@@ -254,6 +254,16 @@ module.exports = (function (){
         }
       })
     },
+    getProjects: function(req, res){
+      // console.log('GOT TO GET USERS CONTROLLER');
+      Class.find({open: true}, function(err, found_classes){
+        if(err){
+          console.log(err);
+        }else{
+          res.json(found_classes);
+        }
+      })
+    },
     destroyUser: function(req,res) {
       User.findByIdAndRemove(req.params.id, function(err){
         if(err){

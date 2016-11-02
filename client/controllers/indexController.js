@@ -121,6 +121,14 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  		console.log("grabbed post",$scope.grabbedPost)
  	};
 
+ 	$scope.showProjects = function(){
+ 		// console.log("here are projects");
+ 		usersFactory.getProjects(function(data){
+ 			console.log(data);
+ 			$scope.upcomingProjects = data.data;
+ 		});
+ 	};
+
  	//edit post
  	$scope.editPost = function(_id, title, url, urlVideo, text){
 		console.log("$scope.editProfile - editing the post with _id: ", _id);
