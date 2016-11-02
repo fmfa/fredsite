@@ -1,297 +1,313 @@
 <div class="container">
-<div ng-controller='adminController'>
-
-<div>
-	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#changeLogo">Change logo</button>
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-	  CREATE NEW CLASS
-	</button>
-<!-- {{getClasses}} -->
-	<button class="btn btn-primary btn-lg" ng-Click="manageClasses()">Manage Open Classes</button>
-
-	<button class="btn btn-primary btn-lg" ng-Click="seeManageUsers()">Manage Users</button>
-
-	<button class="btn btn-primary btn-lg" ng-Click="showFlaggedPosts()">See Flagged Posts</button>
-
-	<button class="btn btn-primary  btn-lg">Manage Closed</button>
-
-	<button ng-click="showemailForm()" class="btn btn-primary  btn-lg">Send Registration Email</button>
-
-	<button ng-click="showresetForm()" class="btn btn-primary  btn-lg">Reset Passwords for Users</button>
-
-	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#excelUpload">Upload Users (excel file)</button>
-
-	<!-- reset passwords for users -->
-		<div ng-if="showReset">
-			<div class="container">
-				<form>
-					<h5>Reset passwords for users: (separate emails by ,)</h5>
-					<input type="text" ng-model='forgotPassword.email'>
-					<button ng-click="resetPassword(forgotPassword)">Submit</button>
-				</form>
-				<span>Reset password emails have been sent!</span>
-				<h4>{{ errorMessage }}</h4>
-			</div>
-		</div> 
-	<!-- reset passwords for users END-->
-
-	<!-- send registration email START -->
-	<div ng-if="showEmails">
-		<div class="container">
-			<form>
-				<h5>Send registration link to students: (separate emails by ,)</h5>
-				<input type="text" ng-model='regEmail.email'>
-				<button ng-click="sendRegistration()">Submit</button>
-			</form>
-			<h4>{{ successMessage }}</h4>
-			<h4>{{ errorMessage }}</h4>
-		</div>
-	</div> 
-	<!-- send registration email END -->
-
-	<!-- modal for excel upload -->
-
-	<div class="modal fade" id="excelUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h4 class="modal-title" id="myModalLabel">Excel Upload</h4>
-	      </div>
-	      
-
-	       <input type="file" ngf-select ng-model="picFile" name="file"    
-             required
-             ngf-model-invalid="errorFile">
-	      <i ng-show="myForm.file.$error.required">*required</i><br>
-	      <i ng-show="myForm.file.$error.maxSize">File too large 
-	          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-	      <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-	      <br>
-	      <button
-	              ng-click="uploadPic(picFile)">Submit</button>
-	      <span class="progress" ng-show="picFile.progress >= 0">
-	        <div style="width:{{picFile.progress}}%" 
-	            ng-bind="picFile.progress + '%'"></div>
-	      </span>
-	      <span ng-show="picFile.result">Upload Successful</span>
-	      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-		      
-
-
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Modal -->
-
-	<!-- modal for excel upload END -->
-
-
-	<!-- Change logo modal -->
-	<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
-	      </div>
-	      <div class="modal-body">
-	      	 <form novalidate>
-                <div>
-                    <button class="btn btn-primary btn-sm" ngf-select ng-model="picFile" accept="image/*"  >
-                        Select Picture
-                    </button>
-                    <br>
-                    <img height=80 ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile" class="btn btn-primary btn-sm" >Remove</button>
-                    <br>
-                    <button ng-click = "uploadFiles(picFile)" class="btn btn-primary btn-sm" >Submit</button>
-                </div>
-                <span class="progress" ng-show="progress >= 0">    
-                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-                </span>
-                <span ng-show="result">Upload Successful</span>
-                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-            </form>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	        <h4 class="modal-title" id="myModalLabel">Create a New Class</h4>
-	      </div>
-	      <div class="modal-body">
-	        <form>
-	        	Class Name:<input type="text" ng-model='class.name'></input><br>
-	        	Unique ID:<input type="text" ng-model='class.unique_id' placeholder="Ex: GG-1230"></input><br>
-	        	Class Date:<input type="text" ng-model='class.class_id' placeholder="Ex: 2016-01"></input><br>
-	        	<!-- Class Members:<input type="text" ng-model='class.emails'></input>
-	        	<h6>Enter emails comma separated</h6> -->
-	        	Class Description: <textarea ng-model="class.description" cols="50" rows="5"></textarea><br>
-	        	
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" ng-click='createClass()'>Add Class</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-</div>
-
-<div ng-if="showClasses">
-<div  ng-repeat="c in getClasses">
-	{{c}}
-	<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
-	<h5>Class ID: {{c.unique_id}}  </h5>
-	<h5>Class Date: {{c.class_id}}</h5>
-	<h5>Class Description: {{c.description}}</h5>
-	<h4>Users: {{c.users}}</h4>
-	<ul>
-		<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
-	</ul>
-	<button>Close Class</button>
-	<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
-
-	<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
-	<button ng-click='deleteClass(c._id)'>Delete Class</button>
-
-<!-- 	<form ng-submit="sendRegistration()">
-		<input type="submit" id="submit" value="Send Registration Email to Users">
-	
-	</form>
-	
-	 -->
-	
-
-
-</div>
-</div>
-
-<div ng-if="showAddUserToClass">
-	<button ng-click="backFromSearchForUser()">Back</button>
-	<h4>Add user to class: {{classNameToAddUser}}</h4>
-	<p>Search</p>
-	<p>First Name: <input type="text" ng-model="findUser.firstName"></p>
-	<p>Last Name: <input type="text" ng-model="findUser.lastName"></p>
-	<p><input type="submit" value="Search for User" ng-click="searchForUser(findUser)"></p>
-
-	<div ng-if="foundUsers">
-		<div ng-repeat="f in foundUsers">
-		foundUser: {{f._id}} 
-		class_id: {{classIdToAddUser}}
-			<p>{{f.first_name}} {{f.last_name}}</p>
-			<p>{{f.email}} {{f.createdAt}}</p>
-			<button ng-click="addThisUserToClass(f._id, classIdToAddUser)">Add To Class</button>
-		</div>
-	</div>
-</div>
-
-<div ng-if="removeUser">
-	<button ng-click="backFromSearchForUser()">Back</button>
-	<h4>Remove User from class: {{classNameToRemoveUser}}</h4>
-	<!-- {{getClass._users[0].first_name}} -->
-	<ul>
-		<li ng-repeat="u in getClass._users">{{u.first_name}} {{u.last_name}} <button ng-click="deleteRelationshipUserAndClass(u._id)">Remove from Class</button></li>
-	</ul>
-</div>
-
-<div ng-if="seeFlaggedPosts">
-	<h3>FLAGGED POST</h3>
-	<div ng-if='flaggedPosts' ng-repeat='x in flaggedPosts| orderBy: createdAt : true' style="padding-left: 0;">
-		<div class="container">
-		<div class="col-sm-12" style="padding: 0;">
-
-				<h4>
-					{{x.title}}
-					<img src={{x._user_id.profile_pic}} height = '100px' width = '100px'>
-
-				</h4>
-					<img class="img-responsive" ng-if="x.url" src="{{x.url}}"  alt="img">
-					<div ng-if="x.urlVideo" class="embed-responsive embed-responsive-16by9">
-						<iframe class="embed-responsive-item" ng-src="{{x.urlVideo | trusted}}" frameborder="0" allowfullscreen></iframe>
-					</div>
-				<p>{{x.text}} - {{x.createdAt | date: 'MMMM, dd, yyyy @ h:mm a'}} Written By: {{ x._user_id.first_name }} {{x._user_id.last_name}}</p>
-
-				<button  class="btn deleteBtn btn-danger" ng-click = 'deletePost(x._id)'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-				<button ng-if ="x.flagged !== true" type="button" class="btn btn-danger" aria-label="Left Align" ng-click='flagPost(x._id)'>
-					<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" ></span> Flag Post
-				</button>
-				<p ng-if ="x.flagged == true" class="label label-danger">This post has been flagged and is under review by the moderator</p>
-				<button  class="btn btn-info" aria-label="Left Align" ng-click='unflagPost(x._id)'>
-					<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> UnFlag Post
-				</button>
-				<div ng-repeat='c in x.comments' style="margin-left: 60px;">
-			</div>
-
-				<div id="commentsFeed" class="col-sm-12" ng-repeat='c in x.comments' >
-	<!--                     {{c}} -->
-						<h5>{{c._user_name}} commented:</h5>
-					<p>{{c.text}} <button ng-if='user_id == c.rootScope.user._user_id._id' class="btn deleteBtn btn-danger" ng-click = 'deleteComment(c._id)'>Delete</button></p>
-					<br><hr>
-					</div>
-			</div>
-		<div id="comment" class="col-sm-12">
-			 <form class="form-horizontal">
-					<div class="form-group">
-					<textarea class="form-control" rows="3" ng-model='comment[x._id].text'></textarea>
-					</div>
-					<div class="form-group">
-					<button class="btn commentBtn pull-right" type="submit" value="Comment" ng-click='commentPost(x._id)'>Comment</button>
-					</div>
-			</form>
-
-			</div>
-		</div>
-	</div>
-
-</div><!--end seeFlaggedPosts -->
-
-<div ng-if="manageUsers">
-	<div class="container">
-	<div ng-repeat='u in users'>
-	<!-- {{u}} -->
-		<h5>{{u.first_name}} {{u.last_name}}</h5>
+	<div ng-controller='adminController'>
 		<div>
-			<h6>{{u.email}}</h6>
-			<h6>Class: {{u._class.name}}</h6>
-			<h6 ng-if='u.phone'>{{u.phone}}</h6>
-			<h6>Blocked: {{u.blocked}}</h6>
+			<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#changeLogo">Change logo</button>
+			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			  CREATE NEW CLASS
+			</button>
+		<!-- {{getClasses}} -->
+			<button class="btn btn-primary btn-lg" ng-Click="manageClasses()">Manage Open Classes</button>
+
+			<button class="btn btn-primary btn-lg" ng-Click="seeManageUsers()">Manage Users</button>
+
+			<button class="btn btn-primary btn-lg" ng-Click="showFlaggedPosts()">See Flagged Posts</button>
+
+			<button class="btn btn-primary  btn-lg">Manage Closed</button>
+
+			<button ng-click="showemailForm()" class="btn btn-primary  btn-lg">Send Registration Email</button>
+
+			<button ng-click="showresetForm()" class="btn btn-primary  btn-lg">Reset Passwords for Users</button>
+
+			<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#excelUpload">Upload Users (excel file)</button>
+		ShowClasses: {{showClasses}}
+
+		<div ng-if="showClasses">
+		<div  ng-repeat="c in getClasses">
+			<!-- {{c}} -->
+			<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+			<h5>Class ID: {{c.unique_id}}  </h5>
+			<h5>Class Date: {{c.class_id}}</h5>
+			<h5>Class Description: {{c.description}}</h5>
+			<h4>Users: {{c.users}}</h4>
+			<ul>
+				<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
+			</ul>
+			<button>Close Class</button>
+			<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+
+			<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
+			<button ng-click='deleteClass(c._id)'>Delete Class</button>
+
+		<!-- 	<form ng-submit="sendRegistration()">
+				<input type="submit" id="submit" value="Send Registration Email to Users">
+			
+			</form>
+			
+			 -->
+			
+
+
 		</div>
-		<div ng-if="!u.blocked">
-			<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Block User</button>
 		</div>
-		<div ng-if="u.blocked">
-			<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Unblock User</button>
+			<!-- reset passwords for users -->
+				<div ng-if="showReset">
+					<div class="container">
+						<form>
+							<h5>Reset passwords for users: (separate emails by ,)</h5>
+							<input type="text" ng-model='forgotPassword.email'>
+							<button ng-click="resetPassword(forgotPassword)">Submit</button>
+						</form>
+						<span>Reset password emails have been sent!</span>
+						<h4>{{ errorMessage }}</h4>
+					</div>
+				</div> 
+			<!-- reset passwords for users END-->
+
+			<!-- send registration email START -->
+			<div ng-if="showEmails">
+				<div class="container">
+					<form>
+						<h5>Send registration link to students: (separate emails by ,)</h5>
+						<input type="text" ng-model='regEmail.email'>
+						<button ng-click="sendRegistration()">Submit</button>
+					</form>
+					<h4>{{ successMessage }}</h4>
+					<h4>{{ errorMessage }}</h4>
+				</div>
+			</div> 
+			<!-- send registration email END -->
+
+			<!-- modal for excel upload -->
+
+			<div class="modal fade" id="excelUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			        <h4 class="modal-title" id="myModalLabel">Excel Upload</h4>
+			      </div>
+			      
+
+			       <input type="file" ngf-select ng-model="picFile" name="file"    
+		             required
+		             ngf-model-invalid="errorFile">
+			      <i ng-show="myForm.file.$error.required">*required</i><br>
+			      <i ng-show="myForm.file.$error.maxSize">File too large 
+			          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+			      <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+			      <br>
+			      <button
+			              ng-click="uploadPic(picFile)">Submit</button>
+			      <span class="progress" ng-show="picFile.progress >= 0">
+			        <div style="width:{{picFile.progress}}%" 
+			            ng-bind="picFile.progress + '%'"></div>
+			      </span>
+			      <span ng-show="picFile.result">Upload Successful</span>
+			      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+				      
+
+
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- Modal -->
+
+			<!-- modal for excel upload END -->
+
+
+			<!-- Change logo modal -->
+			<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
+			      </div>
+			      <div class="modal-body">
+			      	 <form novalidate>
+		                <div>
+		                    <button class="btn btn-primary btn-sm" ngf-select ng-model="picFile" accept="image/*"  >
+		                        Select Picture
+		                    </button>
+		                    <br>
+		                    <img height=80 ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile" class="btn btn-primary btn-sm" >Remove</button>
+		                    <br>
+		                    <button ng-click = "uploadFiles(picFile)" class="btn btn-primary btn-sm" >Submit</button>
+		                </div>
+		                <span class="progress" ng-show="progress >= 0">    
+		                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+		                </span>
+		                <span ng-show="result">Upload Successful</span>
+		                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+		            </form>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			        <h4 class="modal-title" id="myModalLabel">Create a New Class</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			        	Class Name:<input type="text" ng-model='class.name'></input><br>
+			        	Unique ID:<input type="text" ng-model='class.unique_id' placeholder="Ex: GG-1230"></input><br>
+			        	Class Date:<input type="text" ng-model='class.class_id' placeholder="Ex: 2016-01"></input><br>
+			        	<!-- Class Members:<input type="text" ng-model='class.emails'></input>
+			        	<h6>Enter emails comma separated</h6> -->
+			        	Class Description: <textarea ng-model="class.description" cols="50" rows="5"></textarea><br>
+			        	
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" ng-click='createClass()'>Add Class</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
-		<button class="btn deleteBtn btn-danger pull-right" ng-click = 'deleteUser(u._id)'>Delete User</button><br><hr>
+
+
+		<div ng-if="showClasses">
+		<div  ng-repeat="c in getClasses">
+			{{c}}
+			<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+			<h5>Class ID: {{c.unique_id}}  </h5>
+			<h5>Class Date: {{c.class_id}}</h5>
+			<h5>Class Description: {{c.description}}</h5>
+			<h4>Users: {{c.users}}</h4>
+			<ul>
+				<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
+			</ul>
+			<button>Close Class</button>
+			<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+
+
+
+		<div ng-if="showAddUserToClass">
+			<button ng-click="backFromSearchForUser()">Back</button>
+			<h4>Add user to class: {{classNameToAddUser}}</h4>
+			<p>Search</p>
+			<p>First Name: <input type="text" ng-model="findUser.firstName"></p>
+			<p>Last Name: <input type="text" ng-model="findUser.lastName"></p>
+			<p><input type="submit" value="Search for User" ng-click="searchForUser(findUser)"></p>
+
+			<div ng-if="foundUsers">
+				<div ng-repeat="f in foundUsers">
+				foundUser: {{f._id}} 
+				class_id: {{classIdToAddUser}}
+					<p>{{f.first_name}} {{f.last_name}}</p>
+					<p>{{f.email}} {{f.createdAt}}</p>
+					<button ng-click="addThisUserToClass(f._id, classIdToAddUser)">Add To Class</button>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="removeUser">
+			<button ng-click="backFromSearchForUser()">Back</button>
+			<h4>Remove User from class: {{classNameToRemoveUser}}</h4>
+			<!-- {{getClass._users[0].first_name}} -->
+			<ul>
+				<li ng-repeat="u in getClass._users">{{u.first_name}} {{u.last_name}} <button ng-click="deleteRelationshipUserAndClass(u._id)">Remove from Class</button></li>
+			</ul>
+		</div>
+
+		<div ng-if="seeFlaggedPosts">
+			<h3>FLAGGED POST</h3>
+			<div ng-if='flaggedPosts' ng-repeat='x in flaggedPosts| orderBy: createdAt : true' style="padding-left: 0;">
+				<div class="container">
+				<div class="col-sm-12" style="padding: 0;">
+
+						<h4>
+							{{x.title}}
+							<img src={{x._user_id.profile_pic}} height = '100px' width = '100px'>
+
+						</h4>
+							<img class="img-responsive" ng-if="x.url" src="{{x.url}}"  alt="img">
+							<div ng-if="x.urlVideo" class="embed-responsive embed-responsive-16by9">
+								<iframe class="embed-responsive-item" ng-src="{{x.urlVideo | trusted}}" frameborder="0" allowfullscreen></iframe>
+							</div>
+						<p>{{x.text}} - {{x.createdAt | date: 'MMMM, dd, yyyy @ h:mm a'}} Written By: {{ x._user_id.first_name }} {{x._user_id.last_name}}</p>
+
+						<button  class="btn deleteBtn btn-danger" ng-click = 'deletePost(x._id)'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+						<button ng-if ="x.flagged !== true" type="button" class="btn btn-danger" aria-label="Left Align" ng-click='flagPost(x._id)'>
+							<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" ></span> Flag Post
+						</button>
+						<p ng-if ="x.flagged == true" class="label label-danger">This post has been flagged and is under review by the moderator</p>
+						<button  class="btn btn-info" aria-label="Left Align" ng-click='unflagPost(x._id)'>
+							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> UnFlag Post
+						</button>
+						<div ng-repeat='c in x.comments' style="margin-left: 60px;">
+					</div>
+
+						<div id="commentsFeed" class="col-sm-12" ng-repeat='c in x.comments' >
+			<!--                     {{c}} -->
+								<h5>{{c._user_name}} commented:</h5>
+							<p>{{c.text}} <button ng-if='user_id == c.rootScope.user._user_id._id' class="btn deleteBtn btn-danger" ng-click = 'deleteComment(c._id)'>Delete</button></p>
+							<br><hr>
+							</div>
+					</div>
+				<div id="comment" class="col-sm-12">
+					 <form class="form-horizontal">
+							<div class="form-group">
+							<textarea class="form-control" rows="3" ng-model='comment[x._id].text'></textarea>
+							</div>
+							<div class="form-group">
+							<button class="btn commentBtn pull-right" type="submit" value="Comment" ng-click='commentPost(x._id)'>Comment</button>
+							</div>
+					</form>
+
+					</div>
+				</div>
+			</div>
+
+		</div><!--end seeFlaggedPosts -->
+
+		<div ng-if="manageUsers">
+			<div class="container">
+			<div ng-repeat='u in users'>
+			<!-- {{u}} -->
+				<h5>{{u.first_name}} {{u.last_name}}</h5>
+				<div>
+					<h6>{{u.email}}</h6>
+					<h6>Class: {{u._class.name}}</h6>
+					<h6 ng-if='u.phone'>{{u.phone}}</h6>
+					<h6>Blocked: {{u.blocked}}</h6>
+				</div>
+				<div ng-if="!u.blocked">
+					<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Block User</button>
+				</div>
+				<div ng-if="u.blocked">
+					<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Unblock User</button>
+				</div>
+				<button class="btn deleteBtn btn-danger pull-right" ng-click = 'deleteUser(u._id)'>Delete User</button><br><hr>
+			</div>
+		</div>
+		</div>
+		</div> <!-- end manage users -->
+
+
+
+
+
+		<!-- <div ng-if="manageUsers"> -->
+			<!-- <div class="container"> -->
+			
 	</div>
-</div>
-</div>
-</div> <!-- end manage users -->
 
-
-
-
-
-<!-- <div ng-if="manageUsers"> -->
-	<!-- <div class="container"> -->
-	
-</div>
-
-<!-- </div> -->
-<!-- </div> < -->
+	<!-- </div> -->
+	<!-- </div> < -->
 </div>
 

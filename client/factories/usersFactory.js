@@ -111,5 +111,12 @@ myApp.factory('usersFactory', function ($http, $cookies){
       });
     };
 
+    factory.getProjects = function(callback){
+      console.log("at getProjects factory");
+      $http.get('/getProjects').then(function(data){
+        callback(data);
+      })
+    }
+
     return factory;
 });

@@ -7,6 +7,17 @@
           <img src={{user.url}} alt= 'no picture' height = '120px' width= '120px'>
           <h4>{{ user.first_name | capitalize }} {{ user.last_name | capitalize}}</h4>
       </div>
+
+     <button ng-click="showProjects()">Upcoming Projects</button>
+
+     <div ng-if="upcomingProjects">
+         <div ng-repeat="p in upcomingProjects">
+             <p>{{p.name}}</p>
+             <p>{{p.unique_id}}</p>
+             <p>{{p.class_id}}</p>
+             <p>{{p.description}}</p>
+         </div>
+     </div>
 	
 
       <div class="btn-group col-xs-12 col-md-4" data-toggle="buttons">
