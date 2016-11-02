@@ -43,6 +43,7 @@
 				<input type="text" ng-model='regEmail.email'>
 				<button ng-click="sendRegistration()">Submit</button>
 			</form>
+			<h4>{{ successMessage }}</h4>
 			<h4>{{ errorMessage }}</h4>
 		</div>
 	</div> 
@@ -152,7 +153,7 @@
 
 <div ng-if="showClasses">
 <div  ng-repeat="c in getClasses">
-	<!-- {{c}} -->
+	{{c}}
 	<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
 	<h5>Class ID: {{c.unique_id}}  </h5>
 	<h5>Class Date: {{c.class_id}}</h5>

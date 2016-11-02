@@ -107,24 +107,33 @@ module.exports = (function() {
                       return res.json({error_code:1,err_desc:err, data: null});
                   } 
                   console.log(result);
-                  for(var i = 0; i < result.length; i++){
-                    console.log(result[i].email);
-                    var mailOptions = {
-                      from: 'FMFA@fmfa.org', 
-                      to: result[i].email, // list of receivers 
-                      subject: 'Welcome to FMFA Inc.', // Subject line 
-                      text: 'Hello there, \n \n Welcome to FMFA Inc. Please register for the website at locahost:8000/register \n \nThanks, \n Fred Fowler'  
-                    };
-                    transporter.sendMail(mailOptions, function(error, info){
-                        console.log('inside the transporter')
-                        if(error){
-                            return console.log('this is the ', error);
-                        }
-                        console.log('Message sent: ' + info.response);
-                    });
+                  var result2 = JSON.stringify(result);
+                  console.log(result2);
+
+                  // var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                  
+                  // for(var i = 0; i < result.length; i++){
+                  //   var emailAddress = re.exec(result[i]); 
+                  //   console.log(emailAddress);
+                  // }                  
+                  // for(var i = 0; i < result.length; i++){
+                  //   console.log(result[i].email);
+                  //   var mailOptions = {
+                  //     from: 'FMFA@fmfa.org', 
+                  //     to: result[i].email, // list of receivers 
+                  //     subject: 'Welcome to FMFA Inc.', // Subject line 
+                  //     text: 'Hello there, \n \n Welcome to FMFA Inc. Please register for the website at locahost:8000/register \n \nThanks, \n Fred Fowler'  
+                  //   };
+                  //   transporter.sendMail(mailOptions, function(error, info){
+                  //       console.log('inside the transporter')
+                  //       if(error){
+                  //           return console.log('this is the ', error);
+                  //       }
+                  //       console.log('Message sent: ' + info.response);
+                  //   });
 
 
-                  }
+                  // }
                   //mailer functionality
                   // var mailOptions = {
                   //   from: 'FMFA@fmfa.org', 
