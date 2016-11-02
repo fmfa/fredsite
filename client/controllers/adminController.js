@@ -161,6 +161,7 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 	}
 
 		 	$scope.manageClasses = function(){
+		 		console.log("at manageClasses");
 		 		$scope.seeFlaggedPosts = false;
 				$scope.manageUsers = false;
 				$scope.showEmails = false;
