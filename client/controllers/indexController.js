@@ -126,6 +126,7 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  		usersFactory.getProjects(function(data){
  			console.log(data);
  			$scope.upcomingProjects = data.data;
+ 			$scope.choose('upcomingProjects');
  		});
  	};
 

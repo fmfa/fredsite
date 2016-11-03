@@ -205,3 +205,11 @@ canvas{
     margin-left: 0px;
 
 }*/
+
+#feedToggle{
+    display: inline-block !important;
+    width: 450px;
+}
+#userImg{
+    width: 200px;
+}

@@ -3,26 +3,19 @@
 
 	<div class="row">
 
-      <div class="col-xs-12 col-md-8">
+      <div class="col-xs-12 col-md-8" id="userImg">
           <img src={{user.url}} alt= 'no picture' height = '120px' width= '120px'>
           <h4>{{ user.first_name | capitalize }} {{ user.last_name | capitalize}}</h4>
       </div>
 
-     <button ng-click="showProjects()">Upcoming Projects</button>
+     <!-- <button class="btn btn-primary" ng-click="showProjects()">Upcoming Projects</button> -->
 
-     <div ng-if="upcomingProjects">
-         <div ng-repeat="p in upcomingProjects">
-             <p>{{p.name}}</p>
-             <p>{{p.unique_id}}</p>
-             <p>{{p.class_id}}</p>
-             <p>{{p.description}}</p>
-         </div>
-     </div>
+     
 	
 
-      <div class="btn-group col-xs-12 col-md-4" data-toggle="buttons">
+      <div class="btn-group col-xs-12 col-md-4" data-toggle="buttons" id="feedToggle">
         <label class="btn btn-primary active noto" ng-click="choose('all')">
-          <input type="radio" name="options" id="favorites" autocomplete="off" checked > All
+          <input type="radio" name="options" id="favorites" autocomplete="off" checked > All Posts
         </label>
         <label class="btn btn-primary noto" ng-click="choose('myClass')">
           <input type="radio" name="options" id="attending" autocomplete="off" > My Class
@@ -30,9 +23,19 @@
         <label class="btn btn-primary noto" ng-click="choose('following')">
           <input type="radio" name="options" id="attending" autocomplete="off" > Following
         </label>
+        <button class="btn btn-primary" ng-click="showProjects()">Upcoming Projects</button>
       </div>
 
   </div> <!-- END OF ROW -->
+
+  <div ng-if="choice == 'upcomingProjects'">
+         <div ng-repeat="p in upcomingProjects">
+             <p>{{p.name}}</p>
+             <p>{{p.unique_id}}</p>
+             <p>{{p.class_id}}</p>
+             <p>{{p.description}}</p>
+         </div>
+     </div>
 
 
   <div ng-if="choice == 'all'">
