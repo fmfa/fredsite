@@ -87,8 +87,17 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 			});
 
 			$scope.resetPassword = function(email){
-				mailFactory.forgotEmail(email);
-				$scope.forgotPassword = {}; 
+				mailFactory.forgotEmail(email, function(data){
+					console.log(data); 
+					if(data.data.code == 200){
+						$scope.resetStatus = data.data.status
+					}
+					else{
+						$scope.resetError = data.data.status
+					}
+					$scope.forgotPassword = {}; 	
+				})
+				
 			}
 
 			$scope.deletePost = function(postId){
@@ -212,9 +221,15 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 		console.log($scope.regEmail); 
 		 		mailFactory.sendRegistrationEmail($scope.regEmail, function(data){
 		 			console.log(data); 
-		 			if(data.status == 500){
-		 				$scope.errorMessage = data.message;
-		 			}
+		 				if(data.data.code == 200){
+		 					$scope.status = data.data.status;
+		 				}
+		 				else{
+		 					$scope.error = data.data.status;
+		 				}
+		 			// if(data.status == 500){
+		 			// 	$scope.errorMessage = data.message;
+		 			// }
 		 		}); 
 		 		$scope.regEmail = {}; 
 

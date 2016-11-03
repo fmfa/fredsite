@@ -57,8 +57,8 @@
 						<input type="text" ng-model='forgotPassword.email'>
 						<button ng-click="resetPassword(forgotPassword)">Submit</button>
 					</form>
-					<span>Reset password emails have been sent!</span>
-					<h4>{{ errorMessage }}</h4>
+					<h5 style="color: green">{{ resetStatus }}</h5>
+					<h5 style="color:red">{{ resetError }}</h5>
 				</div>
 			</div> 
 			<!-- reset passwords for users END-->
@@ -71,8 +71,8 @@
 						<input type="text" ng-model='regEmail.email'>
 						<button ng-click="sendRegistration()">Submit</button>
 					</form>
-					<h4>{{ successMessage }}</h4>
-					<h4>{{ errorMessage }}</h4>
+					<h5 style="color: green">{{ status }}</h5>
+					<h5 style="color: red">{{ error }}</h5>
 				</div>
 			</div> 
 			<!-- send registration email END -->
@@ -284,8 +284,18 @@
 					</div>
 				</div>
 			</div>
-			<!-- end manage users -->
-		</div>
+		<!-- end manage users -->
+
+
+
+
+
+		<!-- <div ng-if="manageUsers"> -->
+			<!-- <div class="container"> -->
+			
 	</div>
+
+	<!-- </div> -->
+	<!-- </div> < -->
 </div>
 

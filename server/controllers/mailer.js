@@ -71,9 +71,12 @@ module.exports = (function() {
     transporter.sendMail(mailOptions, function(error, info){
         console.log('inside the transporter')
         if(error){
+            console.log('this is the ', error);
+            res.json({status:'Error in sending out registration email', code:500});
             return console.log('this is the ', error);
         }
         console.log('Message sent: ' + info.response);
+        res.json({status: 'Registration email has been sent', code: 200})
     });
     }, 
     uploadExcel: function(req, res){
@@ -151,38 +154,27 @@ module.exports = (function() {
     },
 
     forgotEmail: function(req, res){
-      // crypto.randomBytes(20, function(err, buf) {
-      //   var token = buf.toString('hex');
-      // });
-      // var mailOptions = {
-      //     from: 'FMFA@fmfa.org', 
-      //     to: req.body.email, // list of receivers 
-      //     subject: 'FMFA Inc. Password Reset', // Subject line 
-      //     text:'You are receiving this because you (or someone else) have requested the reset of the password for your account. \n Please click on the following link, or paste this into your browser to complete the process: \n localhost:8000/#/reset/'+token+'\n If you did request this, please ignore this email and your password will remain unchanged.'        
-      // };
-      // console.log('this is the mail options', mailOptions); 
-
-      // transporter.sendMail(mailOptions, function(error, info){
-      //     if(error){
-      //         return console.log('this is the ', error);
-      //     }
-      //     console.log('Message sent: ' + info.response);
-      // });
       crypto.randomBytes(8, function(err, buf) {
         var token = buf.toString('hex');
         console.log(token);
         User.findOne({email:req.body.email}, function(err, user){
             if (err) {
-                console.log(err);
+                res.json({status: 'Email does not exist in system'})
+                return console.log('this is the error,', err)
             } else {
-                user.password = secretPassword(token);
-                user.save(function(err){
-                  if(err){
-                    console.log('there was an error with pw reset')
-                    
-                  }
-                  res.json(user);
-                });
+                if(!user){
+                  res.json({status: 'Email does not exist in system'})
+                  return console.log('this is the error,', err)
+                }
+                else{
+                  user.password = secretPassword(token);
+                  user.save(function(err){
+                    if(err){
+                      console.log('there was an error with pw reset')
+                    }
+                  });
+                }
+                
             }
         });
         var mailOptions = {
@@ -195,9 +187,11 @@ module.exports = (function() {
 
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
+                res.json({status:'Error in sending out password reset emails', code:500});
                 return console.log('this is the ', error);
             }
             console.log('Message sent: ' + info.response);
+            res.json({status: 'Registration email has been sent', code: 200})
         });
       });
       

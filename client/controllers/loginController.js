@@ -2,7 +2,15 @@ myApp.controller('loginController', function($scope, $location, $window, $timeou
     $scope.forgot = {};
     $scope.forgotEmail = function(forgot){
       // console.log(forgot);   
-      mailFactory.forgotEmail(forgot);
+      mailFactory.forgotEmail(forgot, function(data){
+        console.log(data.data);
+        if(data.data.code == 200){
+          $scope.status = data.data.status
+        }
+        else{
+          $scope.errorStatus = data.data.status
+        }
+      });
       $scope.forgot = {}; 
     }
 
