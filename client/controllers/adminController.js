@@ -203,12 +203,12 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 		 	}
 
 		 	$scope.addUserToClass= function(id, name){
-		 		$scope.seeFlaggedPosts = false;
-				$scope.manageUsers = false;
-				$scope.showClasses = false;
+		 	// 	$scope.seeFlaggedPosts = false;
+				// $scope.manageUsers = false;
+				// $scope.showClasses = false;
 				$scope.showAddUserToClass = true;
-				$scope.showEmails = false;
-				$scope.showReset = false;
+				// $scope.showEmails = false;
+				// $scope.showReset = false;
 		 		$scope.classNameToAddUser = name;
 		 		$scope.classIdToAddUser = id;
 		 	}
