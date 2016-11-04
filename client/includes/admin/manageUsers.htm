@@ -1,0 +1,21 @@
+<div ng-if="manageUsers">
+				<div class="container">
+					<div ng-repeat='u in users'>
+						<h5>{{u.first_name}} {{u.last_name}}</h5>
+						<div>
+							<h6>{{u.email}}</h6>
+							<h6>Class: {{u._class.name}}</h6>
+							<h6 ng-if='u.phone'>{{u.phone}}</h6>
+							<h6>Blocked: {{u.blocked}}</h6>
+						</div>
+						<div ng-if="!u.blocked">
+							<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Block User</button>
+						</div>
+						<div ng-if="u.blocked">
+							<button class="btn deleteBtn btn-danger pull-right" ng-click="blockUser(u._id)">Unblock User</button>
+						</div>
+						<button class="btn deleteBtn btn-danger pull-right" ng-click = 'deleteUser(u._id)'>Delete User</button><br><hr>
+					</div>
+				</div>
+			</div>
+		<!-- end manage users -->

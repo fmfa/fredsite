@@ -1,12 +1,13 @@
-<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Change logo modal -->
+			<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
-			      </div>
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
+				      </div>
 			      <div class="modal-body">
 			      	 <form novalidate>
 		                <div>
@@ -19,7 +20,8 @@
 		                    <button ng-click = "uploadFiles(picFile)" class="btn btn-primary btn-sm" >Submit</button>
 		                </div>
 		                <span class="progress" ng-show="progress >= 0">    
-		                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+		                    <div style="width:{{progress}}%" ng-bind="progress + '%'">
+		                    </div>
 		                </span>
 		                <span ng-show="result">Upload Successful</span>
 		                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>

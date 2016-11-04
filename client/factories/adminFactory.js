@@ -24,6 +24,7 @@ myApp.factory('adminFactory', function ($http, $cookies){
   }
 
   factory.searchForUser = function(user, callback){
+    console.log("adminFactory searchForUser", user);
     $http.post('/searchForUser', user).then(function(data){
       callback(data.data);
     });

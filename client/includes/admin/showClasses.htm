@@ -10,6 +10,8 @@
 					</ul>
 					<button>Close Class</button>
 					<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+					<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
+					<button ng-click='deleteClass(c._id)'>Delete Class</button>
 					<!-- div to add user to class -->
 					<div ng-if="showAddUserToClass">
 						<button ng-click="backFromSearchForUser()">Back</button>

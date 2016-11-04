@@ -6,8 +6,8 @@
 						<input type="text" ng-model='forgotPassword.email'>
 						<button ng-click="resetPassword(forgotPassword)">Submit</button>
 					</form>
-					<span>Reset password emails have been sent!</span>
-					<h4>{{ errorMessage }}</h4>
+					<h5 style="color: green">{{ resetStatus }}</h5>
+					<h5 style="color:red">{{ resetError }}</h5>
 				</div>
 			</div> 
 			<!-- reset passwords for users END-->
