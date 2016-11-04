@@ -3,6 +3,7 @@ var secret = require('./app.js');
 var crypto = require('crypto');
 var async = require('async');
 var User = mongoose.model('users');
+var Email = mongoose.model('emails')
 var bcrypt = require('bcryptjs');
 var secretPassword = function(password){
     var salt = bcrypt.genSaltSync(10)
@@ -56,28 +57,67 @@ var upload = multer({ //multer settings
 
 module.exports = (function() {
   return {
+    getMessage: function(req,res){
+      Email.find({}, function(err, message){
+        if(err){
+          console.log('error', err); 
+        }
+        else{
+          res.json(message);
+        }
+      })
+    },
+    changeMessage: function(req,res){
+      console.log(req.body);
+      Email.findByIdAndUpdate({ _id : '581cab5a7ad3a81544df4bf5'},req.body, function(err,message){
+        if(err){
+          console.log('error', err); 
+        }
+        else{
+          res.json(message);
+        }
+      })
+      // var message = new Email(req.body);
+      // message.save(function(err, message){
+      //   if(err){
+      //     console.log('error', err)
+      //   }
+      //   else{
+      //     console.log('message was saved', message);
+      //   }
+      // })
+
+    },
     registration: function(req, res){
 
       console.log(req.body);
-      var mailOptions = {
-          from: 'FMFA@fmfa.org', 
-          to: req.body.email, // list of receivers 
-          subject: 'Welcome to FMFA Inc.', // Subject line 
-          text: 'Hello there, \n \n Welcome to FMFA Inc. Please register for the website at locahost:8000/register \n \nThanks, \n Fred Fowler'
-        
-      };
-    console.log('this is the mail options', mailOptions); 
-
-    transporter.sendMail(mailOptions, function(error, info){
-        console.log('inside the transporter')
-        if(error){
-            console.log('this is the ', error);
-            res.json({status:'Error in sending out registration email', code:500});
-            return console.log('this is the ', error);
+      Email.find({}, function(err, message){
+        if(err){
+          console.log('error', err); 
         }
-        console.log('Message sent: ' + info.response);
-        res.json({status: 'Registration email has been sent', code: 200})
-    });
+        else{
+          console.log(message);
+        }
+      })
+    //   var mailOptions = {
+    //       from: 'FMFA@fmfa.org', 
+    //       to: req.body.email, // list of receivers 
+    //       subject: 'Welcome to FMFA Inc.', // Subject line 
+    //       text: 'Hello there, \n \n Welcome to FMFA Inc. Please register for the website at locahost:8000/register \n \nThanks, \n Fred Fowler'
+        
+    //   };
+    // console.log('this is the mail options', mailOptions); 
+
+    // transporter.sendMail(mailOptions, function(error, info){
+    //     console.log('inside the transporter')
+    //     if(error){
+    //         console.log('this is the ', error);
+    //         res.json({status:'Error in sending out registration email', code:500});
+    //         return console.log('this is the ', error);
+    //     }
+    //     console.log('Message sent: ' + info.response);
+    //     res.json({status: 'Registration email has been sent', code: 200})
+    // });
     }, 
     uploadExcel: function(req, res){
       var exceltojson;

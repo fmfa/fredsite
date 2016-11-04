@@ -168,4 +168,10 @@ var mailerController = require('../controllers/mailer.js')
   app.post('/upload', function(req, res){
     mailerController.uploadExcel(req,res);
   })
+  app.post('/changeMessage', function(req,res){
+    mailerController.changeMessage(req,res);
+  })
+  app.get('/getMessage', function(req, res){
+    mailerController.getMessage(req,res);
+  })
 }

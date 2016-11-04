@@ -73,6 +73,14 @@
 					</form>
 					<h5 style="color: green">{{ status }}</h5>
 					<h5 style="color: red">{{ error }}</h5>
+
+					<h4>Current message sent out with emails</h4>
+					<h5>{{ emailMessage.data[0].message }}</h5>
+					<h4>Change email message</h4>
+					<form>
+						<textarea ng-model="email.message"></textarea>
+						<button ng-click="changeMessage(email)">Submit</button>
+					</form>
 				</div>
 			</div> 
 			<!-- send registration email END -->

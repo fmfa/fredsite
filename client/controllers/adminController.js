@@ -1,7 +1,7 @@
 myApp.controller('adminController', function($scope, $location, $window, $timeout, $cookies, authFact, postsFactory, usersFactory, adminFactory, $rootScope, Upload, S3UploadService, mailFactory){
 	$scope.regEmail = {}; 
 	$scope.forgotPassword = {}; 
-
+	$scope.email={};
 	console.log('ADMIN CONTROLLER');
 
 	var userCookie = authFact.getUserCookie();
@@ -80,11 +80,24 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 			$scope.showClasses = false;
 			$scope.showAddUserToClass = false;
 			$scope.showEmails = false;
+			mailFactory.getMessage(function(message){
+				console.log(message);
+				$scope.emailMessage = message; 
+			})
 
 			postsFactory.getFlaggedPosts(function(data){
-				console.log(data);
+				// console.log(data);
 				$scope.flaggedPosts = data;
 			});
+
+			$scope.changeMessage = function(email){
+				// console.log(email);
+				mailFactory.changeMessage(email, function(data){
+					console.log(data);
+					$scope.emailMessage = data
+					$scope.email = {};
+				})
+			}
 
 			$scope.resetPassword = function(email){
 				mailFactory.forgotEmail(email, function(data){

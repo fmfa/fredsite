@@ -11,6 +11,16 @@ myApp.factory('mailFactory', function ($http, $cookies){
     	callback(data);
     })
   }
+  factory.changeMessage = function(email, callback){
+  	$http.post('/changeMessage', email).then(function(data){
+  		callback(data);
+  	})
+  }
+  factory.getMessage = function(callback){
+  	$http.get('/getMessage').then(function(message){
+  		callback(message);
+  	})
+  }
 
     return factory;
 });
