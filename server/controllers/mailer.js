@@ -68,24 +68,24 @@ module.exports = (function() {
       })
     },
     changeMessage: function(req,res){
-      console.log(req.body);
-      Email.findByIdAndUpdate({ _id : '581cab5a7ad3a81544df4bf5'},req.body, function(err,message){
-        if(err){
-          console.log('error', err); 
-        }
-        else{
-          res.json(message);
-        }
-      })
-      // var message = new Email(req.body);
-      // message.save(function(err, message){
+      // console.log(req.body);
+      // Email.findByIdAndUpdate({ _id : '581cab5a7ad3a81544df4bf5'},req.body, function(err,message){
       //   if(err){
-      //     console.log('error', err)
+      //     console.log('error', err); 
       //   }
       //   else{
-      //     console.log('message was saved', message);
+      //     res.json(message);
       //   }
       // })
+      var message = new Email(req.body);
+      message.save(function(err, message){
+        if(err){
+          console.log('error', err)
+        }
+        else{
+          console.log('message was saved', message);
+        }
+      })
 
     },
     registration: function(req, res){
