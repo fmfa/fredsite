@@ -1,0 +1,13 @@
+<!-- send registration email START -->
+			<div ng-if="showEmails">
+				<div class="container">
+					<form>
+						<h5>Send registration link to students: (separate emails by ,)</h5>
+						<input type="text" ng-model='regEmail.email'>
+						<button ng-click="sendRegistration()">Submit</button>
+					</form>
+					<h4>{{ successMessage }}</h4>
+					<h4>{{ errorMessage }}</h4>
+				</div>
+			</div> 
+			<!-- send registration email END -->

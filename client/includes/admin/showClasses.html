@@ -1,0 +1,28 @@
+<div ng-if="showClasses">
+				<div  ng-repeat="c in getClasses">
+					<!-- {{c}} -->
+					<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+					<h5>Class ID: {{c.unique_id}}  </h5>
+					<h5>Class Date: {{c.class_id}}</h5>
+					<h5>Class Description: {{c.description}}</h5>
+					<h4>Users: {{c.users}}</h4>
+					<ul>
+						<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
+					</ul>
+					<button>Close Class</button>
+					<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+
+					<button ng-click="removeUserFromClass(c._id, c.name)">Remove User from Class</button>
+					<button ng-click='deleteClass(c._id)'>Delete Class</button>
+
+				<!-- 	<form ng-submit="sendRegistration()">
+						<input type="submit" id="submit" value="Send Registration Email to Users">
+					
+					</form>
+					
+					 -->
+					
+
+
+				</div>
+			</div>

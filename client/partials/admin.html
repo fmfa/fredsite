@@ -71,13 +71,14 @@
 						<input type="text" ng-model='regEmail.email'>
 						<button ng-click="sendRegistration()">Submit</button>
 					</form>
-					<h5 style="color: green">{{ status }}</h5>
-					<h5 style="color: red">{{ error }}</h5>
 
-					<h4>Current message sent out with emails</h4>
-					<h5 ng-repeat="i in emailMessage">{{ i.message }}</h5>
+						<h5 style="color: green">{{ status }}</h5>
+						<h5 style="color: red">{{ error }}</h5>
 
-					<h4>Change email message</h4>
+						<h4>Current message sent out with emails</h4>
+						<h5 ng-repeat="i in emailMessage">{{ i.message }}</h5>
+
+						<h4>Change email message</h4>
 					<form>
 						<textarea ng-model="email.message"></textarea>
 						<button ng-click="changeMessage(email)">Submit</button>
@@ -105,19 +106,18 @@
 			      <i ng-show="myForm.file.$error.required">*required</i><br>
 			      <i ng-show="myForm.file.$error.maxSize">File too large 
 			          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-			      <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-			      <br>
-			      <button
-			              ng-click="uploadPic(picFile)">Submit</button>
-			      <span class="progress" ng-show="picFile.progress >= 0">
-			        <div style="width:{{picFile.progress}}%" 
-			            ng-bind="picFile.progress + '%'"></div>
-			      </span>
-			      <span ng-show="picFile.result">Upload Successful</span>
-			      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+			      	<img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+			      	<br>
+			      		<button ng-click="uploadPic(picFile)">Submit</button>
+			      		<span class="progress" ng-show="picFile.progress >= 0">
+			        		<div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'">
+			            	</div>
+			      		</span>
+			      		<span ng-show="picFile.result">Upload Successful</span>
+			      		<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
 			      </div>
 			    </div>
-			  </div>
+			  <!-- </div> -->
 			</div>
 			<!-- Modal -->
 
@@ -128,12 +128,12 @@
 			<div class="modal fade" id="changeLogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
-			      </div>
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				        <h4 class="modal-title" id="myModalLabel">Change logo</h4>
+				      </div>
 			      <div class="modal-body">
 			      	 <form novalidate>
 		                <div>
@@ -146,7 +146,8 @@
 		                    <button ng-click = "uploadFiles(picFile)" class="btn btn-primary btn-sm" >Submit</button>
 		                </div>
 		                <span class="progress" ng-show="progress >= 0">    
-		                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+		                    <div style="width:{{progress}}%" ng-bind="progress + '%'">
+		                    </div>
 		                </span>
 		                <span ng-show="result">Upload Successful</span>
 		                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
@@ -155,16 +156,19 @@
 			    </div>
 			  </div>
 			</div>
+
+
+
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				        <h4 class="modal-title" id="myModalLabel">Create a New Class</h4>
-				      </div>
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					        <h4 class="modal-title" id="myModalLabel">Create a New Class</h4>
+					      </div>
 				      <div class="modal-body">
 				        <form>
 				        	Class Name:<input type="text" ng-model='class.name'></input><br>
@@ -180,8 +184,8 @@
 				        <button type="button" class="btn btn-primary" ng-click='createClass()'>Add Class</button>
 				      </div>
 				    </div>
-				  </div>
-				</div>
+				 </div>
+			</div>
 
 
 			<div ng-if="showClasses">
@@ -235,31 +239,31 @@
 				<h3>FLAGGED POST</h3>
 				<div ng-if='flaggedPosts' ng-repeat='x in flaggedPosts| orderBy: createdAt : true' style="padding-left: 0;">
 					<div class="container">
-					<div class="col-sm-12" style="padding: 0;">
-						<h4>
-							{{x.title}}
-							<img src={{x._user_id.profile_pic}} height = '100px' width = '100px'>
-						</h4>
-						<img class="img-responsive" ng-if="x.url" src="{{x.url}}"  alt="img">
-						<div ng-if="x.urlVideo" class="embed-responsive embed-responsive-16by9">
-							<iframe class="embed-responsive-item" ng-src="{{x.urlVideo | trusted}}" frameborder="0" allowfullscreen></iframe>
+						<div class="col-sm-12" style="padding: 0;">
+							<h4>
+								{{x.title}}
+								<img src={{x._user_id.profile_pic}} height = '100px' width = '100px'>
+							</h4>
+							<img class="img-responsive" ng-if="x.url" src="{{x.url}}"  alt="img">
+								<div ng-if="x.urlVideo" class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item" ng-src="{{x.urlVideo | trusted}}" frameborder="0" allowfullscreen></iframe>
+								</div>
+							<p>{{x.text}} - {{x.createdAt | date: 'MMMM, dd, yyyy @ h:mm a'}} Written By: {{ x._user_id.first_name }} {{x._user_id.last_name}}</p>
+							<button  class="btn deleteBtn btn-danger" ng-click = 'deletePost(x._id)'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+							<button ng-if ="x.flagged !== true" type="button" class="btn btn-danger" aria-label="Left Align" ng-click='flagPost(x._id)'>
+								<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" ></span> Flag Post
+							</button>
+							<p ng-if ="x.flagged == true" class="label label-danger">This post has been flagged and is under review by the moderator</p>
+							<button  class="btn btn-info" aria-label="Left Align" ng-click='unflagPost(x._id)'>
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> UnFlag Post
+							</button>
+								<div ng-repeat='c in x.comments' style="margin-left: 60px;"></div>
+								<div id="commentsFeed" class="col-sm-12" ng-repeat='c in x.comments' >
+									<h5>{{c._user_name}} commented:</h5>
+								<p>{{c.text}} <button ng-if='user_id == c.rootScope.user._user_id._id' class="btn deleteBtn btn-danger" ng-click = 'deleteComment(c._id)'>Delete</button></p>
+								<br><hr>
+								</div>
 						</div>
-						<p>{{x.text}} - {{x.createdAt | date: 'MMMM, dd, yyyy @ h:mm a'}} Written By: {{ x._user_id.first_name }} {{x._user_id.last_name}}</p>
-						<button  class="btn deleteBtn btn-danger" ng-click = 'deletePost(x._id)'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-						<button ng-if ="x.flagged !== true" type="button" class="btn btn-danger" aria-label="Left Align" ng-click='flagPost(x._id)'>
-							<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" ></span> Flag Post
-						</button>
-						<p ng-if ="x.flagged == true" class="label label-danger">This post has been flagged and is under review by the moderator</p>
-						<button  class="btn btn-info" aria-label="Left Align" ng-click='unflagPost(x._id)'>
-							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> UnFlag Post
-						</button>
-						<div ng-repeat='c in x.comments' style="margin-left: 60px;"></div>
-						<div id="commentsFeed" class="col-sm-12" ng-repeat='c in x.comments' >
-							<h5>{{c._user_name}} commented:</h5>
-						<p>{{c.text}} <button ng-if='user_id == c.rootScope.user._user_id._id' class="btn deleteBtn btn-danger" ng-click = 'deleteComment(c._id)'>Delete</button></p>
-						<br><hr>
-						</div>
-					</div>
 					<div id="comment" class="col-sm-12">
 						<form class="form-horizontal">
 							<div class="form-group">
@@ -272,6 +276,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
 			<div ng-if="manageUsers">
 				<div class="container">

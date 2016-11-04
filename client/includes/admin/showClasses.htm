@@ -1,0 +1,44 @@
+<div ng-if="showClasses">
+				<div  ng-repeat="c in getClasses">
+					<h4>Class:{{c.name}} CreatedAt: {{c.createdAt}}</h4>
+					<h5>Class ID: {{c.unique_id}}  </h5>
+					<h5>Class Date: {{c.class_id}}</h5>
+					<h5>Class Description: {{c.description}}</h5>
+					<h4>Users: {{c.users}}</h4>
+					<ul>
+						<li ng-repeat="u in c._users">{{u.first_name}} {{u.last_name}}</li>
+					</ul>
+					<button>Close Class</button>
+					<button ng-click="addUserToClass(c._id, c.name)">Add User to Class</button>
+					<!-- div to add user to class -->
+					<div ng-if="showAddUserToClass">
+						<button ng-click="backFromSearchForUser()">Back</button>
+						<h4>Add user to class: {{classNameToAddUser}}</h4>
+						<p>Search</p>
+						<p>First Name: <input type="text" ng-model="findUser.firstName"></p>
+						<p>Last Name: <input type="text" ng-model="findUser.lastName"></p>
+						<p><input type="submit" value="Search for User" ng-click="searchForUser(findUser)"></p>
+
+						<div ng-if="foundUsers">
+							<div ng-repeat="f in foundUsers">
+							foundUser: {{f._id}} 
+							class_id: {{classIdToAddUser}}
+								<p>{{f.first_name}} {{f.last_name}}</p>
+								<p>{{f.email}} {{f.createdAt}}</p>
+								<button ng-click="addThisUserToClass(f._id, classIdToAddUser)">Add To Class</button>
+							</div>
+						</div>
+					</div>
+					<!-- div to add user to class END -->
+					<!-- div to remove user -->
+					<div ng-if="removeUser">
+						<button ng-click="backFromSearchForUser()">Back</button>
+						<h4>Remove User from class: {{classNameToRemoveUser}}</h4>
+						<!-- {{getClass._users[0].first_name}} -->
+						<ul>
+							<li ng-repeat="u in getClass._users">{{u.first_name}} {{u.last_name}} <button ng-click="deleteRelationshipUserAndClass(u._id)">Remove from Class</button></li>
+						</ul>
+					</div>
+					<!-- div to remove user END-->
+				</div>
+			</div>

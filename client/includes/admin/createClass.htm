@@ -1,0 +1,26 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				        <h4 class="modal-title" id="myModalLabel">Create a New Class</h4>
+				      </div>
+				      <div class="modal-body">
+				        <form>
+				        	Class Name:<input type="text" ng-model='class.name'></input><br>
+				        	Unique ID:<input type="text" ng-model='class.unique_id' placeholder="Ex: GG-1230"></input><br>
+				        	Class Date:<input type="text" ng-model='class.class_id' placeholder="Ex: 2016-01"></input><br>
+				        	<!-- Class Members:<input type="text" ng-model='class.emails'></input>
+				        	<h6>Enter emails comma separated</h6> -->
+				        	Class Description: <textarea ng-model="class.description" cols="50" rows="5"></textarea><br>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary" ng-click='createClass()'>Add Class</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>

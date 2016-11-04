@@ -1,0 +1,13 @@
+<!-- reset passwords for users -->
+			<div ng-if="showReset">
+				<div class="container">
+					<form>
+						<h5>Reset passwords for users: (separate emails by ,)</h5>
+						<input type="text" ng-model='forgotPassword.email'>
+						<button ng-click="resetPassword(forgotPassword)">Submit</button>
+					</form>
+					<span>Reset password emails have been sent!</span>
+					<h4>{{ errorMessage }}</h4>
+				</div>
+			</div> 
+			<!-- reset passwords for users END-->
