@@ -63,6 +63,7 @@ module.exports = (function() {
           console.log('error', err); 
         }
         else{
+          console.log(message)
           res.json(message);
         }
       })
@@ -72,9 +73,6 @@ module.exports = (function() {
       // Email.findByIdAndUpdate({ _id : '581cab5a7ad3a81544df4bf5'},req.body, function(err,message){
       //   if(err){
       //     console.log('error', err); 
-      //   }
-      //   else{
-      //     res.json(message);
       //   }
       // })
       var message = new Email(req.body);
@@ -89,7 +87,6 @@ module.exports = (function() {
 
     },
     registration: function(req, res){
-
       console.log(req.body);
       Email.find({}, function(err, message){
         if(err){
@@ -97,27 +94,28 @@ module.exports = (function() {
         }
         else{
           console.log(message);
+          var mailOptions = {
+              from: 'FMFA@fmfa.org', 
+              to: req.body.email, // list of receivers 
+              subject: 'Welcome to FMFA Inc.', // Subject line 
+              text: 'Hello there, \n \n'+ message[0].message +'\n \nThanks, \n Fred Fowler'
+            
+          };
+          console.log('this is the mail options', mailOptions); 
+
+          transporter.sendMail(mailOptions, function(error, info){
+              console.log('inside the transporter')
+              if(error){
+                  console.log('this is the ', error);
+                  res.json({status:'Error in sending out registration email', code:500});
+                  return console.log('this is the ', error);
+              }
+              console.log('Message sent: ' + info.response);
+              res.json({status: 'Registration email has been sent', code: 200})
+          });
         }
       })
-    //   var mailOptions = {
-    //       from: 'FMFA@fmfa.org', 
-    //       to: req.body.email, // list of receivers 
-    //       subject: 'Welcome to FMFA Inc.', // Subject line 
-    //       text: 'Hello there, \n \n Welcome to FMFA Inc. Please register for the website at locahost:8000/register \n \nThanks, \n Fred Fowler'
-        
-    //   };
-    // console.log('this is the mail options', mailOptions); 
-
-    // transporter.sendMail(mailOptions, function(error, info){
-    //     console.log('inside the transporter')
-    //     if(error){
-    //         console.log('this is the ', error);
-    //         res.json({status:'Error in sending out registration email', code:500});
-    //         return console.log('this is the ', error);
-    //     }
-    //     console.log('Message sent: ' + info.response);
-    //     res.json({status: 'Registration email has been sent', code: 200})
-    // });
+    
     }, 
     uploadExcel: function(req, res){
       var exceltojson;

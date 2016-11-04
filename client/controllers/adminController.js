@@ -92,10 +92,16 @@ myApp.controller('adminController', function($scope, $location, $window, $timeou
 
 			$scope.changeMessage = function(email){
 				// console.log(email);
-				mailFactory.changeMessage(email, function(data){
-					console.log(data);
-					$scope.emailMessage = data
-					$scope.email = {};
+				// mailFactory.changeMessage(email, function(data){
+				// 	console.log(data);
+				// 	$scope.emailMessage = data
+				// 	$scope.email = {};
+				// })
+				mailFactory.changeMessage(email); 
+				mailFactory.getMessage(function(message){
+					// console.log(message);
+					$scope.emailMessage = message; 
+					$scope.email={};
 				})
 			}
 
