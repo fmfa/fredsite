@@ -8,19 +8,19 @@ var UserSchema = new mongoose.Schema({
     first_name: {
       type:  String,
       required : true,
-      maxlength : 25,
+      maxlength : 255,
       
     },
     last_name : {
       type : String,
       required : true,
-      maxlength : 25,
+      maxlength : 255,
       
     },
     email : {
      type : String,
      required : true,
-     maxlength : 25,
+     maxlength : 255,
      
    },
    email_share : {

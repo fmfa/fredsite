@@ -240,7 +240,8 @@
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button type="button" class="btn btn-primary pull-right" ng-click='editProfile(user._id, user.first_name, user.last_name, user.email, user.phone)' data-dismiss="modal">Save Changes</button>
+                                    <button type="button" class="btn btn-primary pull-right" ng-click='editProfile(user._id, user.first_name, user.last_name, user.email, user.phone)'>Save Changes</button>
+                                    <p ng-show="resultProfile == 'good'" style="color:green;">Successfully updated password</p>
                                 </div>
                             </div>
                         </form><br><br>
