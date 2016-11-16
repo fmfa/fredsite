@@ -245,7 +245,13 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 				$scope.result = 'error';
 			}
 			else if(data.data.status == 'ok!'){
-				$scope.result = 'ok'
+				$scope.result = 'ok';
+				$scope.pswd = {};
+				$scope.registerForm.password.$pristine = true;
+				$scope.registerForm.confirmPassword.$pristine = true;
+				$scope.registerForm.password.$error.required= false;
+				$scope.registerForm.password.$touched = false;
+				$scope.registerForm.confirmPassword.$touched = false;
 			}
 
 		});
