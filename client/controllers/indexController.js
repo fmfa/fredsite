@@ -231,6 +231,9 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 			$cookies.remove('userCookie');
 			authFact.setUserCookie(data.data._id, data.data.first_name, data.data.last_name, data.data.email, data.data.phone);
 			authFact.getUserCookie();
+			
+			$scope.resultProfile = 'good';
+			
 			console.log('after edit user -- $rootScope.user: ', $rootScope.user);
 		});
 	}
