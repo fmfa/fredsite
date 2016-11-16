@@ -277,9 +277,10 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  	};
 
  	$scope.removeProfile = function(userId){
+ 		var logout = $scope.logout;
 		usersFactory.deleteUser(userId, function(data){
 			console.log('removed this user:', data);
-			$location.url('/login');
+			logout();
 		});
 	};
 	// upload image functionality
