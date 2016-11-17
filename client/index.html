@@ -232,7 +232,7 @@
                                         <input type="checkbox" value="" ng-model="edit.phoneShare">Phone</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <h6><a style="color: red; cursor: pointer;" ng-really-message="Are you sure? You are about to remove your profile, this action cannot be reverted" ng-really-click="removeProfile(user._id)">Remove Profile</a></h6>
+                                    <h6><a style="color: red; cursor: pointer;" ng-really-message="Are you sure? You are about to remove your profile, this action cannot be reverted" ng-really-click="removeProfile(user._id)" data-dismiss='modal'>Remove Profile</a></h6>
                                 </div>
                                 
 
@@ -240,7 +240,8 @@
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <button type="button" class="btn btn-primary pull-right" ng-click='editProfile(user._id, user.first_name, user.last_name, user.email, user.phone)' data-dismiss="modal">Save Changes</button>
+                                    <button type="button" class="btn btn-primary pull-right" ng-click='editProfile(user._id, user.first_name, user.last_name, user.email, user.phone)'>Save Changes</button>
+                                    <p ng-show="resultProfile == 'good'" style="color:green;">Successfully updated password</p>
                                 </div>
                             </div>
                         </form><br><br>

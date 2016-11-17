@@ -231,6 +231,9 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 			$cookies.remove('userCookie');
 			authFact.setUserCookie(data.data._id, data.data.first_name, data.data.last_name, data.data.email, data.data.phone);
 			authFact.getUserCookie();
+			
+			$scope.resultProfile = 'good';
+			
 			console.log('after edit user -- $rootScope.user: ', $rootScope.user);
 		});
 	}
@@ -245,7 +248,13 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
 				$scope.result = 'error';
 			}
 			else if(data.data.status == 'ok!'){
-				$scope.result = 'ok'
+				$scope.result = 'ok';
+				$scope.pswd = {};
+				$scope.registerForm.password.$pristine = true;
+				$scope.registerForm.confirmPassword.$pristine = true;
+				$scope.registerForm.password.$error.required= false;
+				$scope.registerForm.password.$touched = false;
+				$scope.registerForm.confirmPassword.$touched = false;
 			}
 
 		});
@@ -277,9 +286,10 @@ myApp.controller('indexController', function($scope, $rootScope, $location, $win
  	};
 
  	$scope.removeProfile = function(userId){
+ 		var logout = $scope.logout;
 		usersFactory.deleteUser(userId, function(data){
 			console.log('removed this user:', data);
-			$location.url('/login');
+			logout();
 		});
 	};
 	// upload image functionality
