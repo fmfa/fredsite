@@ -210,27 +210,30 @@ module.exports = (function() {
                     if(err){
                       console.log('there was an error with pw reset')
                     }
+                    else{
+                      var mailOptions = {
+                        from: 'FMFA@fmfa.org', 
+                        to: req.body.email, // list of receivers 
+                        subject: 'FMFA Inc. Password Reset', // Subject line 
+                        text:'You are receiving this because you (or someone else) have requested the reset of the password for your account. \n We have reset your password to ' + token + '. Please use this password to login and subsequently change your password'        
+                      };
+                      console.log('this is the mail options', mailOptions); 
+
+                      transporter.sendMail(mailOptions, function(error, info){
+                          if(error){
+                              res.json({status:'Error in sending out password reset emails', code:500});
+                              return console.log('this is the ', error);
+                          }
+                          console.log('Message sent: ' + info.response);
+                          res.json({status: 'Registration email has been sent', code: 200})
+                      });
+                    }
                   });
                 }
                 
             }
         });
-        var mailOptions = {
-          from: 'FMFA@fmfa.org', 
-          to: req.body.email, // list of receivers 
-          subject: 'FMFA Inc. Password Reset', // Subject line 
-          text:'You are receiving this because you (or someone else) have requested the reset of the password for your account. \n We have reset your password to ' + token + '. Please use this password to login and subsequently change your password'        
-        };
-        console.log('this is the mail options', mailOptions); 
-
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-                res.json({status:'Error in sending out password reset emails', code:500});
-                return console.log('this is the ', error);
-            }
-            console.log('Message sent: ' + info.response);
-            res.json({status: 'Registration email has been sent', code: 200})
-        });
+        
       });
       
     }
